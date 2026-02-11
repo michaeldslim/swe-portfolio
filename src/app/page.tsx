@@ -19,6 +19,15 @@ const navItems: INavItem[] = [
 const experiences: IExperience[] = [
   {
     id: "exp-1",
+    role: "Mobile App Developer (Personal Project)",
+    company: "Personal Projects",
+    period: "",
+    description:
+      "Started with a cross-platform mobile app built using React Native, then extended the product ecosystem by developing a native macOS application with Swift.",
+    techStack: ["React Native", "TypeScript", "Expo", "Swift"],
+  },
+  {
+    id: "exp-2",
     role: "Senior Frontend Engineer - Front End with Full Stack Experience",
     company: "Northwell Health",
     period: "",
@@ -27,7 +36,7 @@ const experiences: IExperience[] = [
     techStack: ["React", "React Native", "TypeScript", "Next.js", "Nx", "Azure", "GCP"],
   },
   {
-    id: "exp-2",
+    id: "exp-3",
     role: "Senior Frontend Engineer",
     company: "Health Gorilla",
     period: "",
@@ -36,7 +45,7 @@ const experiences: IExperience[] = [
     techStack: ["React", "React Native", "TypeScript", "Webpack Module Federation"],
   },
   {
-    id: "exp-3",
+    id: "exp-4",
     role: "Frontend Engineer III",
     company: "iHerb",
     period: "",
@@ -45,7 +54,7 @@ const experiences: IExperience[] = [
     techStack: ["React", "React Native", "TypeScript", "RxJS"],
   },
   {
-    id: "exp-4",
+    id: "exp-5",
     role: "Senior Frontend Engineer - Front End with Full Stack Experience",
     company: "Paciolan",
     period: "",
@@ -54,7 +63,7 @@ const experiences: IExperience[] = [
     techStack: ["React", "Node.js", "TypeScript", "Python"],
   },
   {
-    id: "exp-5",
+    id: "exp-6",
     role: "Full Stack Engineer",
     company: "Zoasis",
     period: "",
