@@ -19,7 +19,7 @@ const navItems: INavItem[] = [
 const experiences: IExperience[] = [
   {
     id: "exp-1",
-    role: "Mobile App Developer (Personal Project)",
+    role: "Independent Project - Mobile App Developer",
     company: "Personal Projects",
     period: "",
     description:
