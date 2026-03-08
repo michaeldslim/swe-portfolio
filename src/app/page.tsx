@@ -89,7 +89,7 @@ const projects: IProject[] = [
     name: "Carrot Note App",
     description:
       "Carrot Note App is a React Native note‑taking app that lets users sign up/login with Firebase Auth, create and manage titled notes stored in Firestore, and organize them into custom categories. It includes a note list and detail editor, category management in Settings, and email verification to keep user data tied securely to their account.",
-    techStack: ["React Native", "TypeScript", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
     screenshotNames: ["carrot-note-2.png", "carrot-note-3.png", "carrot-note-4.png"],
@@ -99,7 +99,7 @@ const projects: IProject[] = [
     name: "MlRadioFM-RN",
     description:
       "A React Native radio streaming app that lets users browse and play online stations, with features like category filters and a robust audio player that prevents overlapping streams. It supports both English and Korean via a language toggle and centralized translation system.",
-    techStack: ["React Native", "TypeScript", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
     screenshotNames: ["mlradiofm-rn-2.png", "mlradiofm-rn-3.png", "mlradiofm-rn-4.png"],
@@ -119,7 +119,7 @@ const projects: IProject[] = [
     name: "Puzzle Board",
     description:
       "This project is a sliding puzzle game built with React Native, TypeScript, and Expo, featuring 3×3, 4×4, and 5×5 boards. It offers both classic number mode and a photo mode where you can use your own images, with smooth animations and solvable puzzle generation.",
-    techStack: ["React Native", "TypeScript", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
     screenshotNames: ["puzzle-board-1.png", "puzzle-board-3.png", "puzzle-board-4.png"],
@@ -129,10 +129,20 @@ const projects: IProject[] = [
     name: "Omok (Gomoku) Game",
     description:
       "This is a React Native (Expo + TypeScript) implementation of the classic 15×15 Gomoku game, supporting both player-vs-player and player-vs-AI modes. It includes win/draw detection, a Korean UI, optional per-turn timer, and a heuristic-based AI that evaluates and selects moves.",
-    techStack: ["React Native", "TypeScript", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
     screenshotNames: ["omok-game-1.png", "omok-game-2.png", "omok-game-3.png"],
+  },
+  {
+    id: "proj-mobile-6",
+    name: "Bulls Cows",
+    description:
+      "This project is a mobile 3-digit number-baseball (숫자야구) game built with React Native + TypeScript (Expo). Players guess a secret number with unique digits (0 allowed) and receive Strike/Ball/Out feedback each attempt.",
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    category: "mobile",
+    note: "",
+    screenshotNames: ["bulls-cows-1.png", "bulls-cows-3.png", "bulls-cows-4.png"],
   },
 ];
 
