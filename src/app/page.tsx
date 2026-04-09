@@ -92,7 +92,7 @@ const projects: IProject[] = [
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
-    screenshotNames: ["carrot-note-2.png", "carrot-note-3.png", "carrot-note-4.png"],
+    screenshotNames: ["note-1.png", "note-2.png", "note-3.png"],
   },
   {
     id: "proj-mobile-2",
@@ -118,7 +118,7 @@ const projects: IProject[] = [
     id: "proj-mobile-4",
     name: "Puzzle Board",
     description:
-      "This project is a sliding puzzle game built with React Native, TypeScript, and Expo, featuring 3×3, 4×4, and 5×5 boards. It offers both classic number mode and a photo mode where you can use your own images, with smooth animations and solvable puzzle generation.",
+      "Slide puzzle is a sliding puzzle game built with React Native, TypeScript, and Expo, featuring 3×3, 4×4, and 5×5 boards. It offers both classic number mode and a photo mode where you can use your own images, with smooth animations and solvable puzzle generation.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
@@ -132,17 +132,27 @@ const projects: IProject[] = [
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
-    screenshotNames: ["omok-game-1.png", "omok-game-2.png", "omok-game-3.png"],
+    screenshotNames: ["omok-1.png", "omok-2.png", "omok-3.png"],
   },
   {
     id: "proj-mobile-6",
     name: "Bulls Cows",
     description:
-      "This project is a mobile 3-digit number-baseball (숫자야구) game built with React Native + TypeScript (Expo). Players guess a secret number with unique digits (0 allowed) and receive Strike/Ball/Out feedback each attempt.",
+      "A number baseball game built with React Native and TypeScript using Expo, where players guess a secret number with unique digits (including 0) and get Strike, Ball, or Out feedback on each attempt.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
     screenshotNames: ["bulls-cows-1.png", "bulls-cows-3.png", "bulls-cows-4.png"],
+  },
+  {
+    id: "proj-mobile-7",
+    name: "Candy Break",
+    description:
+      "Candy Break is a React Native mobile game where players break candy blocks, featuring a custom game engine, fireworks animations, and audio/visual assets.",
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    category: "mobile",
+    note: "",
+    screenshotNames: ["candy-1.png", "candy-2.png", "candy-3.png"],
   },
 ];
 
