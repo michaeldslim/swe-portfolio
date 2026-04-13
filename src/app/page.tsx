@@ -1,12 +1,82 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { IExperience, INavItem, IProject, ThemeName } from "@/types";
 import { useTheme } from "./ThemeProvider";
 
 const enableThemeSwitcher =
   process.env.NEXT_PUBLIC_ENABLE_THEME_SWITCHER === "true";
+
+type ModalImage = {
+  src: string;
+  alt: string;
+};
+
+function ScreenshotModal({
+  image,
+  onClose,
+}: {
+  image: ModalImage;
+  onClose: () => void;
+}) {
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // Move focus into the modal for keyboard users.
+    closeButtonRef.current?.focus();
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-8 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Screenshot preview"
+      onMouseDown={(event) => {
+        // Close on backdrop click, ignore clicks that start within the dialog content.
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <div className="w-full max-w-5xl">
+        <div className="flex justify-end pb-3">
+          <button
+            ref={closeButtonRef}
+            type="button"
+            onClick={onClose}
+            className="rounded-full border border-white/15 bg-background/60 px-4 py-2 text-xs font-medium text-foreground/80 shadow-sm shadow-black/40 transition hover:bg-background/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+            aria-label="Close screenshot preview"
+          >
+            Close
+          </button>
+        </div>
+        <div className="relative h-[70vh] w-full overflow-hidden rounded-2xl border border-white/15 bg-black/40 shadow-lg shadow-black/60">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes="(max-width: 768px) 92vw, 900px"
+            className="object-contain"
+            priority
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const navItems: INavItem[] = [
   { id: "home", label: "Home", href: "#home" },
@@ -122,7 +192,7 @@ const projects: IProject[] = [
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
-    screenshotNames: ["puzzle-board-1.png", "puzzle-board-3.png", "puzzle-board-4.png"],
+    screenshotNames: ["puzzle-1.png", "puzzle-2.png", "puzzle-3.png"],
   },
   {
     id: "proj-mobile-5",
@@ -136,7 +206,7 @@ const projects: IProject[] = [
   },
   {
     id: "proj-mobile-6",
-    name: "Bulls Cows",
+    name: "Bulls & Cows",
     description:
       "A number baseball game built with React Native and TypeScript using Expo, where players guess a secret number with unique digits (including 0) and get Strike, Ball, or Out feedback on each attempt.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
@@ -160,13 +230,27 @@ const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 fi
 
 export default function Home() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [modalImage, setModalImage] = useState<ModalImage | null>(null);
+  const lastActiveElementRef = useRef<HTMLElement | null>(null);
   const { theme, handleThemeChange } = useTheme();
   const webProjects = projects.filter((project) => project.category === "web");
   const macosProjects = projects.filter((project) => project.category === "macos");
   const mobileProjects = projects.filter((project) => project.category === "mobile");
 
+  const openModal = (image: ModalImage) => {
+    lastActiveElementRef.current = document.activeElement as HTMLElement | null;
+    setModalImage(image);
+  };
+
+  const closeModal = () => {
+    setModalImage(null);
+    // Restore focus after the modal unmounts.
+    queueMicrotask(() => lastActiveElementRef.current?.focus?.());
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {modalImage && <ScreenshotModal image={modalImage} onClose={closeModal} />}
       <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
           <div className="text-sm font-mono uppercase tracking-[0.2em] text-accent">
@@ -374,23 +458,25 @@ export default function Home() {
                             </div>
                             <div className="absolute inset-x-3 bottom-2 top-5 overflow-hidden rounded-lg border border-white/15 bg-black/60">
                               {primaryScreenshot ? (
-                                project.href ? (
-                                  <a href={project.href}>
-                                    <Image
-                                      src={`/${primaryScreenshot}`}
-                                      alt={`${project.name} screenshot`}
-                                      fill
-                                      className="object-cover"
-                                    />
-                                  </a>
-                                ) : (
+                                <button
+                                  type="button"
+                                  className="relative block h-full w-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+                                  // onClick={() =>
+                                  //   openModal({
+                                  //     src: `/${primaryScreenshot}`,
+                                  //     alt: `${project.name} screenshot`,
+                                  //   })
+                                  // }
+                                  aria-label={`Open ${project.name} screenshot`}
+                                >
                                   <Image
                                     src={`/${primaryScreenshot}`}
                                     alt={`${project.name} screenshot`}
                                     fill
+                                    sizes="(max-width: 768px) 100vw, 320px"
                                     className="object-cover"
                                   />
-                                )
+                                </button>
                               ) : (
                                 <div className="flex h-full w-full items-center justify-center px-3 text-center">
                                   <span className="text-[10px] text-foreground/70">
@@ -440,29 +526,38 @@ export default function Home() {
                         </div>
                         <div className="mt-3">
                           {/* Phone-style mockups for all screenshots or a single placeholder (same as mobile) */}
-                          <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
-                            {hasScreenshots ? (
-                              project.screenshotNames!.map((screenshotName, index) => (
-                                <div
-                                  key={screenshotName ?? index}
-                                  className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50"
-                                >
-                                  <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-                                    <Image
-                                      src={`/${screenshotName}`}
-                                      alt={`${project.name} screenshot ${index + 1}`}
-                                      fill
-                                      className="object-cover"
-                                    />
-                                  </div>
-                                  <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-                                  <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-                                </div>
-                              ))
-                            ) : (
-                              <div className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50">
-                                <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-                                  <div className="flex h-full w-full items-center justify-center px-2 text-center">
+	                          <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
+	                            {hasScreenshots ? (
+	                              project.screenshotNames!.map((screenshotName, index) => (
+	                                <button
+	                                  type="button"
+	                                  key={screenshotName ?? index}
+	                                  className="relative h-40 w-24 shrink-0 cursor-zoom-in rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50 transition hover:border-accent-soft/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+	                                  onClick={() =>
+	                                    openModal({
+	                                      src: `/${screenshotName}`,
+	                                      alt: `${project.name} screenshot ${index + 1}`,
+	                                    })
+	                                  }
+	                                  aria-label={`Open ${project.name} screenshot ${index + 1}`}
+	                                >
+	                                  <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
+	                                    <Image
+	                                      src={`/${screenshotName}`}
+	                                      alt={`${project.name} screenshot ${index + 1}`}
+	                                      fill
+	                                      sizes="96px"
+	                                      className="object-cover"
+	                                    />
+	                                  </div>
+	                                  <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
+	                                  <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
+	                                </button>
+	                              ))
+	                            ) : (
+	                              <div className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50">
+	                                <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
+	                                  <div className="flex h-full w-full items-center justify-center px-2 text-center">
                                     <span className="text-[10px] text-foreground/70">
                                       macos-screenshot.png
                                     </span>
@@ -517,29 +612,38 @@ export default function Home() {
                     </div>
                     <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
                       {/* Phone mockups for all screenshots or a single placeholder */}
-                      <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
-                        {hasScreenshots ? (
-                          project.screenshotNames!.map((screenshotName, index) => (
-                            <div
-                              key={screenshotName ?? index}
-                              className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50"
-                            >
-                              <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-                                <Image
-                                  src={`/${screenshotName}`}
-                                  alt={`${project.name} screenshot ${index + 1}`}
-                                  fill
-                                  className="object-cover"
-                                />
-                              </div>
-                              <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-                              <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-                            </div>
-                          ))
-                        ) : (
-                          <div className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50">
-                            <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-                              <div className="flex h-full w-full items-center justify-center px-2 text-center">
+	                      <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
+	                        {hasScreenshots ? (
+	                          project.screenshotNames!.map((screenshotName, index) => (
+	                            <button
+	                              type="button"
+	                              key={screenshotName ?? index}
+	                              className="relative h-40 w-24 shrink-0 cursor-zoom-in rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50 transition hover:border-accent-soft/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+	                              onClick={() =>
+	                                openModal({
+	                                  src: `/${screenshotName}`,
+	                                  alt: `${project.name} screenshot ${index + 1}`,
+	                                })
+	                              }
+	                              aria-label={`Open ${project.name} screenshot ${index + 1}`}
+	                            >
+	                              <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
+	                                <Image
+	                                  src={`/${screenshotName}`}
+	                                  alt={`${project.name} screenshot ${index + 1}`}
+	                                  fill
+	                                  sizes="96px"
+	                                  className="object-cover"
+	                                />
+	                              </div>
+	                              <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
+	                              <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
+	                            </button>
+	                          ))
+	                        ) : (
+	                          <div className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50">
+	                            <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
+	                              <div className="flex h-full w-full items-center justify-center px-2 text-center">
                                 <span className="text-[10px] text-foreground/70">
                                   screenshot.png
                                 </span>
