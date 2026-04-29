@@ -89,8 +89,8 @@ const navItems: INavItem[] = [
 const experiences: IExperience[] = [
   {
     id: "exp-1",
-    role: "Independent Project - Mobile App Developer",
-    company: "Personal Projects",
+    role: "Solo Mobile App Developer ",
+    company: "Personal Projects (Self-Initiated)",
     period: "",
     description:
       "Started with a cross-platform mobile app built using React Native, then extended the product ecosystem by developing a native macOS application with Swift.",
