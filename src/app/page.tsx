@@ -98,7 +98,7 @@ const experiences: IExperience[] = [
   },
   {
     id: "exp-2",
-    role: "Senior Frontend Engineer - Front End with Full Stack Experience",
+    role: "Senior Technical Consultant - Front End with Full Stack Experience",
     company: "Northwell Health",
     period: "",
     description:
