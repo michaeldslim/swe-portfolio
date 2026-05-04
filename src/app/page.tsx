@@ -125,7 +125,7 @@ const experiences: IExperience[] = [
   },
   {
     id: "exp-5",
-    role: "Senior Frontend Engineer - Front End with Full Stack Experience",
+    role: "Senior Software Engineer - Front End with Full Stack Experience",
     company: "Paciolan",
     period: "",
     description:
