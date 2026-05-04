@@ -139,7 +139,7 @@ const experiences: IExperience[] = [
     period: "",
     description:
       "Designed, developed, and maintained a customized veterinarian administration and client dashboard, integrating Perl, MySQL, C# .NET, and MS SQL to deliver robust and scalable functionality.",
-    techStack: ["JavaScript", "Perl", "PHP", "MySQL", "C# .NET", "MS SQL"],
+    techStack: ["JavaScript", "Perl", "PHP", "MySQL", "C# .NET", "MSSQL"],
   },
 ];
 
