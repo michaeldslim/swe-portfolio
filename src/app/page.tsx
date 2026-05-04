@@ -99,7 +99,7 @@ const experiences: IExperience[] = [
   {
     id: "exp-2",
     role: "Senior Technical Consultant - Front End with Full Stack Experience",
-    company: "Northwell Health",
+    company: "Phase2/Northwell Health",
     period: "",
     description:
       "Provided front-end development expertise (React, React Native) as a technical consultant for Northwell Health, collaborating cross-functionally to accelerate digital transformation initiatives.",
