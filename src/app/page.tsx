@@ -224,6 +224,16 @@ const projects: IProject[] = [
     note: "",
     screenshotNames: ["candy-1.png", "candy-2.png", "candy-3.png"],
   },
+  {
+    id: "proj-mobile-8",
+    name: "Marbles Game",
+    description:
+      "Marbles Game is a React Native mobile game where players compete in marble challenges, featuring a custom game engine, animations, and audio/visual assets.",
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    category: "mobile",
+    note: "",
+    screenshotNames: ["marbles-1.png", "marbles-2.png", "marbles-3.png", "marbles-4.png"],
+  },
 ];
 
 const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 first:border-t-0";
