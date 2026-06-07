@@ -369,7 +369,7 @@ export default function Home() {
               effectively across cross-functional teams, makes me a strong fit for this role.
             </p>
             <p>
-              Most recently,I served as a Technical Consultant at Northwell Health, where I provided specialized front-end development expertise and partnered closely with internal teams to drive digital transformation initiatives. I played a key role in implementing GCP Vertex AI features on the Google Cloud Platform, enhancing user search experiences, and contributed to the MyNorthwell application, ensuring seamless accessibility across web
+              Most recently, I served as a Technical Consultant at Northwell Health, where I provided specialized front-end development expertise and partnered closely with internal teams to drive digital transformation initiatives. I played a key role in implementing GCP Vertex AI features on the Google Cloud Platform, enhancing user search experiences, and contributed to the MyNorthwell application, ensuring seamless accessibility across web
               and mobile platforms. My experience with database management, including MSSQL, PostgreSQL, and Sequelize migrations, has further enabled me to optimize data handling
               and performance.
             </p>
