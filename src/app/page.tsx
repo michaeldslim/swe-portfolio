@@ -331,19 +331,13 @@ export default function Home() {
         <section id="home" className="scroll-mt-24 pb-16 pt-8 sm:pt-12">
           <div>
             <p className="text-xs font-mono uppercase tracking-[0.25em] text-accent">
-              Senior Frontend Engineer
+              Senior Software Engineer (Front-End Focus with Back-End Experience)
             </p>
             <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
               I build clear, performant web and mobile experiences.
             </h1>
             <p className="mt-4 text-sm leading-relaxed text-foreground/70 sm:text-base">
-              Senior Frontend Engineer with 10+ years of experience building scalable, accessible
-              web applications with React, TypeScript, and modern JavaScript. Led the development of
-              a shared React design system compliant with WCAG 2.1 AA,improving delivery efficiency
-              by 20% and supporting 1M+ users. Strong focus on front-end architecture, performance
-              optimization, and design systems, collaborating closely with UX, product, and backend
-              teams and integrating CI/CD pipelines to ship reliable, high-quality features in
-              remote, cross-functional environments.
+              Senior Software Engineer with over 13 years of experience architecting scalable, accessible web and mobile applications using React, TypeScript, and React Native. I specialize in building high-performance front-end architectures and robust design systems, including the development of a WCAG 2.1 AA-compliant system that increased delivery efficiency by 20% for over 1M users. A collaborative leader experienced in working across UX, product, and backend teams to integrate CI/CD pipelines and deliver high-quality, reliable features in distributed, cross-functional environments.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3 sm:justify-start">
               <a
