@@ -362,20 +362,15 @@ export default function Home() {
           <div className="mt-4 space-y-4 text-sm leading-relaxed text-foreground/80 sm:text-base">
             <p>
               I hold a master&apos;s degree in Engineering Technology and a bachelor&apos;s degree
-              in Computer Science. With over 10 years of experience in web development, I have built
+              in Computer Science. With over 13 years of experience in web development, I have built
               a strong foundation in designing and developing dynamic, scalable web and mobile
               applications using React, React Native, TypeScript, and modern JavaScript tools. My
               passion for crafting intuitive user experiences, along with my ability to collaborate
               effectively across cross-functional teams, makes me a strong fit for this role.
             </p>
             <p>
-              I served as a Technical Consultant at Northwell Health, where I provided specialized
-              front-end development expertise and partnered closely with internal teams to drive
-              digital transformation initiatives. I played a key role in implementing GCP Vertex AI
-              features on the Google Cloud Platform, enhancing user search experiences, and
-              contributed to the MyNorthwell application, ensuring seamless accessibility across web
-              and mobile platforms. My experience with database management, including MSSQL,
-              PostgreSQL, and Sequelize migrations, has further enabled me to optimize data handling
+              Most recently,I served as a Technical Consultant at Northwell Health, where I provided specialized front-end development expertise and partnered closely with internal teams to drive digital transformation initiatives. I played a key role in implementing GCP Vertex AI features on the Google Cloud Platform, enhancing user search experiences, and contributed to the MyNorthwell application, ensuring seamless accessibility across web
+              and mobile platforms. My experience with database management, including MSSQL, PostgreSQL, and Sequelize migrations, has further enabled me to optimize data handling
               and performance.
             </p>
           </div>
