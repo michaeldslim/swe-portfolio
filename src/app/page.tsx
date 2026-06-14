@@ -162,7 +162,7 @@ const projects: IProject[] = [
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
-    screenshotNames: ["note-1.png", "note-2.png", "note-3.png", "note-4.png"],
+    screenshotNames: ["note-1.png", "note-3.png", "note-4.png"],
   },
   {
     id: "proj-mobile-2",
@@ -202,7 +202,7 @@ const projects: IProject[] = [
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
-    screenshotNames: ["omok-1.png", "omok-2.png", "omok-3.png", "omok-4.png"],
+    screenshotNames: ["omok-2.png", "omok-3.png", "omok-4.png"],
   },
   {
     id: "proj-mobile-6",
@@ -232,7 +232,7 @@ const projects: IProject[] = [
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
-    screenshotNames: ["marbles-1.png", "marbles-2.png", "marbles-3.png", "marbles-4.png"],
+    screenshotNames: ["marbles-1.png", "marbles-2.png", "marbles-4.png"],
   },
 ];
 
