@@ -327,7 +327,6 @@ export default function Home() {
       </header>
 
       <main className="mx-auto flex max-w-5xl flex-col px-6 pb-24 pt-10">
-        {/* Home / Hero */}
         <section id="home" className="scroll-mt-24 pb-16 pt-8 sm:pt-12">
           <div>
             <p className="text-xs font-mono uppercase tracking-[0.25em] text-accent">
@@ -356,7 +355,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About */}
         <section id="about" className={sectionClassName}>
           <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">About</h2>
           <div className="mt-4 space-y-4 text-sm leading-relaxed text-foreground/80 sm:text-base">
@@ -376,7 +374,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Experience */}
         <section id="experience" className={sectionClassName}>
           <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Experience</h2>
           <div className="mt-6 space-y-4">
@@ -412,11 +409,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Projects */}
         <section id="projects" className={sectionClassName}>
           <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Projects</h2>
 
-          {/* Web & macOS projects */}
           <div className="mt-6 grid gap-8 md:grid-cols-2">
             {/* Web */}
             <div className="space-y-4">
@@ -448,7 +443,6 @@ export default function Home() {
                           ))}
                         </div>
                         <div className="mt-3 flex items-center gap-3">
-                          {/* Desktop screenshot placeholder / image */}
                           <div className="relative h-52 w-full max-w-xs rounded-xl border border-accent-soft/30 bg-accent-soft/10 shadow-inner shadow-black/40">
                             <div className="absolute inset-x-4 top-2 flex items-center gap-1">
                               <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
@@ -524,7 +518,6 @@ export default function Home() {
                           ))}
                         </div>
                         <div className="mt-3">
-                          {/* Phone-style mockups for all screenshots or a single placeholder (same as mobile) */}
 	                          <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
 	                            {hasScreenshots ? (
 	                              project.screenshotNames!.map((screenshotName, index) => (
@@ -576,7 +569,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mobile projects with mockups */}
           <div className="mt-10 space-y-4">
             <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
               Mobile
@@ -610,7 +602,6 @@ export default function Home() {
                       ))}
                     </div>
                     <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
-                      {/* Phone mockups for all screenshots or a single placeholder */}
 	                      <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
 	                        {hasScreenshots ? (
 	                          project.screenshotNames!.map((screenshotName, index) => (
@@ -664,7 +655,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Contact */}
         <section id="contact" className={sectionClassName}>
           <div className="flex flex-col gap-8 md:flex-row md:items-center">
             <div className="md:w-2/3">
