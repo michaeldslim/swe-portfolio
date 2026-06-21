@@ -254,7 +254,6 @@ export default function Home() {
 
   const closeModal = () => {
     setModalImage(null);
-    // Restore focus after the modal unmounts.
     queueMicrotask(() => lastActiveElementRef.current?.focus?.());
   };
 
@@ -267,7 +266,6 @@ export default function Home() {
             Michael Lim
           </div>
           <div className="flex items-center gap-3">
-            {/* Desktop navigation */}
             <nav className="hidden gap-4 text-xs sm:flex sm:text-sm">
               {navItems.map((item) => (
                 <a
@@ -293,7 +291,6 @@ export default function Home() {
                 </select>
               </label>
             )}
-            {/* Mobile hamburger */}
             <button
               type="button"
               className="inline-flex items-center justify-center rounded-md border border-white/10 bg-black/20 px-2 py-1 text-xs text-foreground/80 shadow-sm shadow-black/30 sm:hidden"
@@ -413,7 +410,6 @@ export default function Home() {
           <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Projects</h2>
 
           <div className="mt-6 grid gap-8 md:grid-cols-2">
-            {/* Web */}
             <div className="space-y-4">
               <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
                 Web
@@ -487,7 +483,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* macOS */}
             <div className="space-y-4">
               <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
                 macOS
