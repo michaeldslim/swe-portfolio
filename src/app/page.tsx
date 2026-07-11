@@ -169,7 +169,7 @@ const projects: IProject[] = [
     description:
       "A React Native radio streaming app that lets users browse and play online stations, with features like category filters and a robust audio player that prevents overlapping streams. It supports both English and Korean via a language toggle and centralized translation system.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
-    href: "https://github.com/michaeldslim/MlRadioFm-RN/releases/latest",
+    href: "",
     category: "mobile",
     note: "",
     screenshotNames: ["mlradiofm-rn-1.png", "mlradiofm-rn-2.png", "mlradiofm-rn-4.png"],
@@ -235,7 +235,7 @@ const projects: IProject[] = [
     href: "https://github.com/michaeldslim/marbles-game/releases/latest",
     category: "mobile",
     note: "",
-    screenshotNames: ["marbles-1.png", "marbles-2.png", "marbles-4.png"],
+    screenshotNames: ["marbles-01.png", "marbles-02.png", "marbles-03.png"],
   },
 ];
 
