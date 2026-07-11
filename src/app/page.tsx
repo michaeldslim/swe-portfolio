@@ -150,7 +150,6 @@ const projects: IProject[] = [
     description:
       "A small browser game built in JavaScript where you try to save every carrot from the bugs.",
     techStack: ["JavaScript", "HTML5", "CSS"],
-    href: "", // enable game using "game/"
     category: "web",
     screenshotNames: ["javascript-game.png"],
   },
@@ -180,6 +179,7 @@ const projects: IProject[] = [
     description:
       "MlRadioFm is a macOS Swift app that streams Korean radio (KBS, MBC, SBS, etc.), some popular English music stations, and podcast stations with a modern, localized UI and an integrated audio player. It focuses on easy access to live stations, good listening controls, and a clean desktop experience.",
     techStack: ["Swift"],
+    href: "https://github.com/michaeldslim/MlRadioFm/releases/latest",
     category: "macos",
     note: "",
     screenshotNames: ["mlradiofm-1.png", "mlradiofm-2.png", "mlradiofm-3.png"],
@@ -200,6 +200,7 @@ const projects: IProject[] = [
     description:
       "This is a React Native (Expo + TypeScript) implementation of the classic 15×15 Gomoku game, supporting both player-vs-player and player-vs-AI modes. It includes win/draw detection, a Korean UI, optional per-turn timer, and a heuristic-based AI that evaluates and selects moves.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    href: "https://github.com/michaeldslim/gomoku-game/releases/latest",
     category: "mobile",
     note: "",
     screenshotNames: ["omok-2.png", "omok-3.png", "omok-4.png"],
@@ -230,6 +231,7 @@ const projects: IProject[] = [
     description:
       "Marbles Game is a React Native mobile game where players compete in marble challenges, featuring a custom game engine, animations, and audio/visual assets.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    href: "https://github.com/michaeldslim/marbles-game/releases/latest",
     category: "mobile",
     note: "",
     screenshotNames: ["marbles-1.png", "marbles-2.png", "marbles-4.png"],
@@ -237,6 +239,29 @@ const projects: IProject[] = [
 ];
 
 const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 first:border-t-0";
+
+function ProjectTitle({ project }: { project: IProject }) {
+  const href = project.href?.trim();
+  const isExternal = href?.startsWith("http") ?? false;
+
+  return (
+    <h3 className="text-sm font-semibold">
+      {project.name}
+      {href ? (
+        <>
+          {" "}
+          <a
+            href={href}
+            className="text-accent hover:underline"
+            {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          >
+            [Download]
+          </a>
+        </>
+      ) : null}
+    </h3>
+  );
+}
 
 export default function Home() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -424,7 +449,7 @@ export default function Home() {
                       className="flex flex-col justify-between rounded-xl border border-white/10 bg-white/5 p-4 text-sm shadow-sm shadow-black/30 backdrop-blur-sm"
                     >
                       <div>
-                        <h3 className="text-sm font-semibold">{project.name}</h3>
+                        <ProjectTitle project={project} />
                         <p className="mt-2 text-xs leading-relaxed text-foreground/80">
                           {project.description}
                         </p>
@@ -498,7 +523,7 @@ export default function Home() {
                       className="flex flex-col justify-between rounded-xl border border-white/10 bg-white/5 p-4 text-sm shadow-sm shadow-black/30 backdrop-blur-sm"
                     >
                       <div>
-                        <h3 className="text-sm font-semibold">{project.name}</h3>
+                        <ProjectTitle project={project} />
                         <p className="mt-2 text-xs leading-relaxed text-foreground/80">
                           {project.description}
                         </p>
@@ -580,7 +605,7 @@ export default function Home() {
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <h3 className="text-sm font-semibold">{project.name}</h3>
+                        <ProjectTitle project={project} />
                         <p className="mt-1 text-xs leading-relaxed text-foreground/80">
                           {project.description}
                         </p>
