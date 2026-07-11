@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React & React Native Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1 id="document-title">React & React Native Documentation</h1>
+        </header>
+        
+        <div class="main-content">
+            <aside class="sidebar">
+              <div><center><a href="../"><h4>Tech hub</h4></a></center></div>
+                <div class="language-toggle">
+                    <button id="ko-btn" class="active">한국어</button>
+                    <button id="en-btn">English</button>
+                </div>
+                <div class="document-selector">
+                    <label for="document-select">Select Document:</label>
+                    <select id="document-select">
+                        <option value="code-examples">Code Examples</option>
+                        <option value="components">Components</option>
+                        <option value="core-concepts">Core Concepts</option>
+                        <option value="development-workflow">Development Workflow</option>
+                        <option value="navigation">Navigation</option>
+                        <option value="styling">Styling</option>
+                        <option value="performance">Performance</option>
+                        <option value="overview">Overview</option>
+                    </select>
+                </div>
+                <div class="section-list-container">
+                    <h3>Sections</h3>
+                    <ul id="section-list"></ul>
+                </div>
+            </aside>
+            
+            <main>
+                <div id="document-content" class="markdown-content"></div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

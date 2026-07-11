@@ -1,0 +1,88 @@
+{
+  "topics": {
+    "ko": [
+      {
+        "id": "execution-context-hoisting",
+        "title": "실행 컨텍스트와 호이스팅",
+        "file": "ko/01-execution-context-hoisting.md"
+      },
+      {
+        "id": "scope-closures",
+        "title": "스코프와 클로저",
+        "file": "ko/02-scope-closures.md"
+      },
+      {
+        "id": "this-keyword",
+        "title": "this 키워드",
+        "file": "ko/03-this-keyword.md"
+      },
+      {
+        "id": "prototypes-inheritance",
+        "title": "프로토타입과 상속",
+        "file": "ko/04-prototypes-inheritance.md"
+      },
+      {
+        "id": "async-js",
+        "title": "비동기 JavaScript",
+        "file": "ko/05-async-js.md"
+      },
+      {
+        "id": "es6-features",
+        "title": "ES6+ 기능",
+        "file": "ko/06-es6-features.md"
+      },
+      {
+        "id": "event-loop",
+        "title": "이벤트 루프",
+        "file": "ko/07-event-loop.md"
+      },
+      {
+        "id": "error-handling",
+        "title": "에러 처리",
+        "file": "ko/08-error-handling.md"
+      }
+    ],
+    "en": [
+      {
+        "id": "execution-context-hoisting",
+        "title": "Execution Context & Hoisting",
+        "file": "en/01-execution-context-hoisting.md"
+      },
+      {
+        "id": "scope-closures",
+        "title": "Scope & Closures",
+        "file": "en/02-scope-closures.md"
+      },
+      {
+        "id": "this-keyword",
+        "title": "The 'this' Keyword",
+        "file": "en/03-this-keyword.md"
+      },
+      {
+        "id": "prototypes-inheritance",
+        "title": "Prototypes & Inheritance",
+        "file": "en/04-prototypes-inheritance.md"
+      },
+      {
+        "id": "async-js",
+        "title": "Asynchronous JavaScript",
+        "file": "en/05-async-js.md"
+      },
+      {
+        "id": "es6-features",
+        "title": "ES6+ Features",
+        "file": "en/06-es6-features.md"
+      },
+      {
+        "id": "event-loop",
+        "title": "Event Loop",
+        "file": "en/07-event-loop.md"
+      },
+      {
+        "id": "error-handling",
+        "title": "Error Handling",
+        "file": "en/08-error-handling.md"
+      }
+    ]
+  }
+}

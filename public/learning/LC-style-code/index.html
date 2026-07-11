@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LC 스타일 코딩 인터뷰 문서</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-dark.css">
+</head>
+<body>
+  <div class="app-container">
+    <div class="sidebar">
+      <div><center><a href="../"><h4>Tech hub</h4></a></center></div>
+      <div class="sidebar-header">
+        <h1><i class="fas fa-code"></i> LC 스타일 인터뷰</h1>
+      </div>
+      <div class="document-selector">
+        <select id="document-select">
+          <!-- Options populated by app.js -->
+        </select>
+      </div>
+      <div class="sidebar-content">
+        <div id="question-list"></div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content-header">
+        <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <h2 id="current-title">LC 스타일 코딩 인터뷰 문서</h2>
+      </div>
+      <div class="content-body">
+        <div id="document-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/lib/core.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/lib/languages/javascript.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

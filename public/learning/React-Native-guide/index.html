@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React Native Interview Guide</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div><center><a href="../"><h4>Tech hub</h4></a></center></div>
+      <h2>React Native Guide</h2>
+      <div class="language-toggle">
+        <button id="ko-btn" class="active">한국어</button>
+        <button id="en-btn">English</button>
+      </div>
+      <nav>
+        <ul id="nav-menu">
+          <li><a href="#core-concepts" onclick="loadMD('core-concepts.md')">Core Concepts</a></li>
+          <li><a href="#components-props-state" onclick="loadMD('components-props-state.md')">Components, Props, and State</a></li>
+          <li><a href="#navigation" onclick="loadMD('navigation.md')">Navigation</a></li>
+          <li><a href="#styling-layout" onclick="loadMD('styling-layout.md')">Styling and Layout</a></li>
+          <li><a href="#native-modules" onclick="loadMD('native-modules.md')">Native Modules & APIs</a></li>
+          <li><a href="#state-management" onclick="loadMD('state-management.md')">State Management</a></li>
+          <li><a href="#performance" onclick="loadMD('performance.md')">Performance Optimization</a></li>
+          <li><a href="#debugging-testing" onclick="loadMD('debugging-testing.md')">Debugging & Testing</a></li>
+          <li><a href="#networking" onclick="loadMD('networking.md')">Networking & Data Fetching</a></li>
+          <li><a href="#deployment" onclick="loadMD('deployment.md')">Deployment & Build</a></li>
+          <li><a href="#permissions-security" onclick="loadMD('permissions-security.md')">Permissions & Security</a></li>
+          <li><a href="#ecosystem" onclick="loadMD('ecosystem.md')">Ecosystem & Libraries</a></li>
+          <li><a href="#platform-differences" onclick="loadMD('platform-differences.md')">Platform Differences</a></li>
+          <li><a href="#accessibility-i18n" onclick="loadMD('accessibility-i18n.md')">Accessibility & i18n</a></li>
+          <li><a href="#ci-cd" onclick="loadMD('ci-cd.md')">CI/CD</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="content">
+      <div id="markdown-content">Loading...</div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

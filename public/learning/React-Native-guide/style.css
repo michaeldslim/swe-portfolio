@@ -1,0 +1,138 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f8fa;
+}
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 270px;
+  background: #222e3a;
+  color: #fff;
+  padding: 2rem 1rem 1rem 1.5rem;
+  box-sizing: border-box;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+}
+.sidebar h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+}
+.language-toggle {
+  display: flex;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 1rem;
+}
+.language-toggle button {
+  flex: 1;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #2d3436;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.language-toggle button:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.language-toggle button:last-child {
+  border-radius: 0 4px 4px 0;
+}
+.language-toggle button:hover {
+  background-color: #fffde7;
+  border-color: #d4be0c;
+}
+.language-toggle button.active {
+  background-color: #f7df1e;
+  color: #323330;
+  border-color: #d4be0c;
+  font-weight: 600;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0 0;
+}
+.sidebar li {
+  margin-bottom: 1.1rem;
+}
+.sidebar a {
+  color: #b0d1ff;
+  text-decoration: none;
+  font-size: 1.08rem;
+  transition: color 0.2s;
+}
+.sidebar a:hover, .sidebar a.active {
+  color: #fff;
+  font-weight: bold;
+}
+.content {
+  flex: 1;
+  padding: 2.5rem 3rem 2rem 3rem;
+  background: #f3f4f6; /* light gray */
+  color: #23272f;
+  box-shadow: 0 0 10px rgba(34,46,58,0.05);
+  min-width: 0;
+}
+
+#markdown-content {
+  background: #f8fafc;
+  color: #23272f;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(34,46,58,0.04);
+  font-size: 1.08rem;
+  line-height: 1.7;
+  transition: background 0.2s, color 0.2s;
+}
+#markdown-content pre {
+  background: #f8fafc; /* dark gray */
+  color: #f5f7fa; /* light font for contrast */
+  padding: 1rem;
+  border-radius: 7px;
+  overflow-x: auto;
+}
+#markdown-content code {
+  color: #2d2d2d;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
+#markdown-content h1, #markdown-content h2, #markdown-content h3 {
+  color: #222e3a;
+  margin-top: 2rem;
+}
+#markdown-content ul, #markdown-content ol {
+  margin-left: 1.5rem;
+}
+#markdown-content table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+#markdown-content th, #markdown-content td {
+  border: 1px solid #dbeafe;
+  padding: 0.5rem 1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 4px solid #dc2626;
+}

@@ -241,6 +241,8 @@ const projects: IProject[] = [
 
 const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 first:border-t-0";
 
+const imageSrc = (filename: string) => `/images/${filename}`;
+
 const downloadLabels: Record<ProjectCategory, string> = {
   mobile: "Download for Android",
   macos: "Download for macOS",
@@ -486,14 +488,14 @@ export default function Home() {
                                   className="relative block h-full w-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
                                   // onClick={() =>
                                   //   openModal({
-                                  //     src: `/${primaryScreenshot}`,
+                                  //     src: imageSrc(primaryScreenshot),
                                   //     alt: `${project.name} screenshot`,
                                   //   })
                                   // }
                                   aria-label={`Open ${project.name} screenshot`}
                                 >
                                   <Image
-                                    src={`/${primaryScreenshot}`}
+                                    src={imageSrc(primaryScreenshot)}
                                     alt={`${project.name} screenshot`}
                                     fill
                                     sizes="(max-width: 768px) 100vw, 320px"
@@ -556,7 +558,7 @@ export default function Home() {
 	                                  className="relative h-40 w-24 shrink-0 cursor-zoom-in rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50 transition hover:border-accent-soft/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
 	                                  onClick={() =>
 	                                    openModal({
-	                                      src: `/${screenshotName}`,
+	                                      src: imageSrc(screenshotName),
 	                                      alt: `${project.name} screenshot ${index + 1}`,
 	                                    })
 	                                  }
@@ -564,7 +566,7 @@ export default function Home() {
 	                                >
 	                                  <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
 	                                    <Image
-	                                      src={`/${screenshotName}`}
+	                                      src={imageSrc(screenshotName)}
 	                                      alt={`${project.name} screenshot ${index + 1}`}
 	                                      fill
 	                                      sizes="96px"
@@ -640,7 +642,7 @@ export default function Home() {
 	                              className="relative h-40 w-24 shrink-0 cursor-zoom-in rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50 transition hover:border-accent-soft/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
 	                              onClick={() =>
 	                                openModal({
-	                                  src: `/${screenshotName}`,
+	                                  src: imageSrc(screenshotName),
 	                                  alt: `${project.name} screenshot ${index + 1}`,
 	                                })
 	                              }
@@ -648,7 +650,7 @@ export default function Home() {
 	                            >
 	                              <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
 	                                <Image
-	                                  src={`/${screenshotName}`}
+	                                  src={imageSrc(screenshotName)}
 	                                  alt={`${project.name} screenshot ${index + 1}`}
 	                                  fill
 	                                  sizes="96px"
@@ -724,7 +726,7 @@ export default function Home() {
                 <div className="rounded-3xl border border-accent-soft/40 bg-background/60 p-1.5 shadow-lg shadow-black/40">
                   <div className="relative h-44 w-44 overflow-hidden rounded-2xl border border-accent-soft/60 bg-white/5">
                     <Image
-                      src="/michael.jpg"
+                      src={imageSrc("michael.jpg")}
                       alt="Portrait of Michael Lim"
                       fill
                       className="object-cover"

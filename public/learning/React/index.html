@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Interview Questions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div><center><a href="../"><h4>Tech hub</h4></a></center></div>
+                <h1>React Interview</h1>
+            </div>
+            <div class="language-toggle">
+                <button id="ko-btn" class="active">Korean</button>
+                <button id="en-btn">English</button>
+            </div>
+            <div class="document-selector">
+                <label for="document-select">Select Document:</label>
+                <select id="document-select">
+                    <option value="part1">Part 1</option>
+                    <option value="part2">Part 2</option>
+                    <option value="part3">Part 3</option>
+                    <option value="part4">Part 4</option>
+                    <option value="part5">Part 5</option>
+                </select>
+            </div>
+            <div class="sidebar-content">
+                <h2>Questions</h2>
+                <ul id="question-list" class="question-list">
+                    <!-- Questions will be populated dynamically -->
+                </ul>
+            </div>
+        </aside>
+        <main class="content">
+            <div class="content-header">
+                <h2 id="document-title">React Interview Questions</h2>
+            </div>
+            <div id="document-content" class="document-content">
+                <!-- Content will be loaded dynamically -->
+                <div class="loading">Loading...</div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React Native Interview Questions</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div><center><a href="../"><h4>Tech hub</h4></a></center></div>
+      <h2>React Native Interview</h2>
+      <div class="language-toggle">
+        <button id="ko-btn" class="active">한국어</button>
+        <button id="en-btn">English</button>
+      </div>
+      <nav>
+        <ul id="nav-menu">
+          <li><a href="#basics" onclick="loadMD('basics.md')">Basics</a></li>
+          <li><a href="#components" onclick="loadMD('components.md')">Components</a></li>
+          <li><a href="#navigation" onclick="loadMD('navigation.md')">Navigation</a></li>
+          <li><a href="#styling" onclick="loadMD('styling.md')">Styling</a></li>
+          <li><a href="#state-management" onclick="loadMD('state-management.md')">State Management</a></li>
+          <li><a href="#performance" onclick="loadMD('performance.md')">Performance</a></li>
+          <li><a href="#native-modules" onclick="loadMD('native-modules.md')">Native Modules</a></li>
+          <li><a href="#networking" onclick="loadMD('networking.md')">Networking</a></li>
+          <li><a href="#testing" onclick="loadMD('testing.md')">Testing</a></li>
+          <li><a href="#deployment" onclick="loadMD('deployment.md')">Deployment</a></li>
+          <li><a href="#advanced" onclick="loadMD('advanced.md')">Advanced Topics</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="content">
+      <div id="markdown-content">Loading...</div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
