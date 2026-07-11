@@ -169,7 +169,7 @@ const projects: IProject[] = [
     description:
       "A React Native radio streaming app that lets users browse and play online stations, with features like category filters and a robust audio player that prevents overlapping streams. It supports both English and Korean via a language toggle and centralized translation system.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
-    href: "",
+    href: "https://github.com/michaeldslim/MlRadioFm-RN/releases/latest",
     category: "mobile",
     note: "",
     screenshotNames: ["mlradiofm-rn-1.png", "mlradiofm-rn-2.png", "mlradiofm-rn-4.png"],
