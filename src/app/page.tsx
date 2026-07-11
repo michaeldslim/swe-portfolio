@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { IExperience, INavItem, IProject, ThemeName } from "@/types";
+import type { IExperience, INavItem, IProject, ProjectCategory, ThemeName } from "@/types";
 import { useTheme } from "./ThemeProvider";
 
 const enableThemeSwitcher =
@@ -241,6 +241,14 @@ const projects: IProject[] = [
 
 const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 first:border-t-0";
 
+const downloadLabels: Record<ProjectCategory, string> = {
+  mobile: "Download for Android",
+  macos: "Download for macOS",
+  ios: "Download for iOS",
+  web: "Download",
+  other: "Download",
+};
+
 function ProjectTitle({ project }: { project: IProject }) {
   const href = project.href?.trim();
   const isExternal = href?.startsWith("http") ?? false;
@@ -256,7 +264,7 @@ function ProjectTitle({ project }: { project: IProject }) {
             className="text-accent hover:underline"
             {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           >
-            [Download]
+            [{downloadLabels[project.category]}]
           </a>
         </>
       ) : null}
