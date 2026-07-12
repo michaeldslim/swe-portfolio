@@ -190,7 +190,7 @@ const projects: IProject[] = [
     name: "Puzzle Board",
     description:
       "Slide puzzle is a sliding puzzle game built with React Native, TypeScript, and Expo, featuring 3×3, 4×4, and 5×5 boards. It offers both classic number mode and a photo mode where you can use your own images, with smooth animations and solvable puzzle generation.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android"],
     category: "mobile",
     note: "",
     screenshotNames: ["puzzle-1.png", "puzzle-2.png", "puzzle-3.png"],
@@ -200,7 +200,7 @@ const projects: IProject[] = [
     name: "Omok (Gomoku) Game",
     description:
       "This is a React Native (Expo + TypeScript) implementation of the classic 15×15 Gomoku game, supporting both player-vs-player and player-vs-AI modes. It includes win/draw detection, a Korean UI, optional per-turn timer, and a heuristic-based AI that evaluates and selects moves.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android"],
     href: "https://github.com/michaeldslim/gomoku-game/releases/latest",
     category: "mobile",
     note: "",
@@ -221,7 +221,8 @@ const projects: IProject[] = [
     name: "Candy Break",
     description:
       "Candy Break is a React Native mobile game where players break candy blocks, featuring a custom game engine, fireworks animations, and audio/visual assets.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    href: "https://github.com/michaeldslim/candy-break/releases/latest",
     category: "mobile",
     note: "",
     screenshotNames: ["candy-01.png", "candy-02.png", "candy-03.png"],
@@ -231,7 +232,7 @@ const projects: IProject[] = [
     name: "Marbles Game",
     description:
       "Marbles Game is a React Native mobile game where players compete in marble challenges, featuring a custom game engine, animations, and audio/visual assets.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android"],
     href: "https://github.com/michaeldslim/marbles-game/releases/latest",
     category: "mobile",
     note: "",
