@@ -237,6 +237,17 @@ const projects: IProject[] = [
     note: "",
     screenshotNames: ["marbles-01.png", "marbles-02.png", "marbles-03.png"],
   },
+  {
+    id: "proj-mobile-9",
+    name: "Color Flow Maze",
+    description:
+      "A sliding-puzzle mobile game built with React Native and Expo. Navigate a player token across a grid-based maze — you slide until you hit a wall, and you must stop exactly on the gold tile to win. Beat all 50 procedurally generated levels to complete the game.",
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    href: "https://github.com/michaeldslim/color-flow-maze/releases/latest",
+    category: "mobile",
+    note: "",
+    screenshotNames: ["maze-1.png", "maze-2.png", "maze-3.png"],
+  },
 ];
 
 const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 first:border-t-0";
