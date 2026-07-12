@@ -191,6 +191,7 @@ const projects: IProject[] = [
     description:
       "Slide puzzle is a sliding puzzle game built with React Native, TypeScript, and Expo, featuring 3×3, 4×4, and 5×5 boards. It offers both classic number mode and a photo mode where you can use your own images, with smooth animations and solvable puzzle generation.",
     techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    href: "https://github.com/michaeldslim/puzzle-RN/releases/latest",
     category: "mobile",
     note: "",
     screenshotNames: ["puzzle-1.png", "puzzle-2.png", "puzzle-3.png"],
