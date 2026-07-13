@@ -215,7 +215,7 @@ const projects: IProject[] = [
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
-    screenshotNames: ["bulls-cows-1.png", "bulls-cows-3.png", "bulls-cows-4.png"],
+    screenshotNames: ["bulls-cows-1.png", "bulls-cows-2.png", "bulls-cows-3.png", "bulls-cows-4.png"],
   },
   {
     id: "proj-mobile-7",
