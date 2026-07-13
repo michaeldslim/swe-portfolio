@@ -161,7 +161,7 @@ const projects: IProject[] = [
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
-    screenshotNames: ["note-1.png", "note-2.png", "note-4.png"],
+    screenshotNames: ["note-1.png", "note-2.png", "note-3.png", "note-4.png"],
   },
   {
     id: "proj-mobile-2",
@@ -183,7 +183,7 @@ const projects: IProject[] = [
     href: "https://github.com/michaeldslim/MlRadioFm/releases/latest",
     category: "macos",
     note: "",
-    screenshotNames: ["mlradiofm-1.png", "mlradiofm-2.png", "mlradiofm-3.png"],
+    screenshotNames: ["mlradiofm-01.png", "mlradiofm-02.png", "mlradiofm-03.png", "mlradiofm-04.png"],
   },
   {
     id: "proj-mobile-4",
