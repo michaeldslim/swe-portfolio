@@ -226,7 +226,7 @@ const projects: IProject[] = [
     href: "https://github.com/michaeldslim/candy-break/releases/latest",
     category: "mobile",
     note: "",
-    screenshotNames: ["candy-01.png", "candy-02.png", "candy-03.png"],
+    screenshotNames: ["candy-01.png", "candy-02.png", "candy-03.png", "candy-04.png"],
   },
   {
     id: "proj-mobile-8",
@@ -237,7 +237,7 @@ const projects: IProject[] = [
     href: "https://github.com/michaeldslim/marbles-game/releases/latest",
     category: "mobile",
     note: "",
-    screenshotNames: ["marbles-01.png", "marbles-02.png", "marbles-03.png"],
+    screenshotNames: ["marbles-01.png", "marbles-02.png", "marbles-03.png", "marbles-04.png"],
   },
   {
     id: "proj-mobile-9",
@@ -248,7 +248,7 @@ const projects: IProject[] = [
     href: "https://github.com/michaeldslim/color-flow-maze/releases/latest",
     category: "mobile",
     note: "",
-    screenshotNames: ["maze-1.png", "maze-2.png", "maze-3.png"],
+    screenshotNames: ["maze-1.png", "maze-2.png", "maze-3.png", "maze-4.png"],
   },
 ];
 
