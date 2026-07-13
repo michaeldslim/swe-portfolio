@@ -172,7 +172,7 @@ const projects: IProject[] = [
     href: "https://github.com/michaeldslim/MlRadioFm-RN/releases/latest",
     category: "mobile",
     note: "",
-    screenshotNames: ["mlradiofm-rn-1.png", "mlradiofm-rn-2.png", "mlradiofm-rn-4.png"],
+    screenshotNames: ["mlradiofm-rn-1.png", "mlradiofm-rn-2.png", "mlradiofm-rn-3.png", "mlradiofm-rn-4.png"],
   },
   {
     id: "proj-mobile-3",
@@ -194,7 +194,7 @@ const projects: IProject[] = [
     href: "https://github.com/michaeldslim/puzzle-RN/releases/latest",
     category: "mobile",
     note: "",
-    screenshotNames: ["puzzle-1.png", "puzzle-2.png", "puzzle-3.png"],
+    screenshotNames: ["puzzle-1.png", "puzzle-2.png", "puzzle-3.png", "puzzle-4.png"],
   },
   {
     id: "proj-mobile-5",
@@ -205,7 +205,7 @@ const projects: IProject[] = [
     href: "https://github.com/michaeldslim/gomoku-game/releases/latest",
     category: "mobile",
     note: "",
-    screenshotNames: ["omok-2.png", "omok-3.png", "omok-4.png"],
+    screenshotNames: ["omok-1.png", "omok-2.png", "omok-3.png", "omok-4.png"],
   },
   {
     id: "proj-mobile-6",
