@@ -90,7 +90,7 @@ const experiences: IExperience[] = [
   {
     id: "exp-1",
     role: "Solo Mobile App Developer ",
-    company: "Personal Projects (Self-Initiated)",
+    company: "Independent Software Developer",
     period: "",
     description:
       "Started with a cross-platform mobile app built using React Native, then extended the product ecosystem by developing a native macOS application with Swift.",
@@ -158,13 +158,23 @@ const projects: IProject[] = [
     name: "Carrot Note App",
     description:
       "Carrot Note App is a React Native note‑taking app that lets users sign up/login with Firebase Auth, create and manage titled notes stored in Firestore, and organize them into custom categories. It includes a note list and detail editor, category management in Settings, and email verification to keep user data tied securely to their account.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Firebase", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
     screenshotNames: ["note-1.png", "note-2.png", "note-3.png", "note-4.png"],
   },
   {
     id: "proj-mobile-2",
+    name: "Mobile Blog App",
+    description:
+      "A React Native / Expo mobile journal for writing, reading, and browsing posts. Sign in with Google via Supabase Auth, then publish Markdown entries with images and tags, browse a searchable feed, explore posts on a calendar, and manage drafts from your profile.",
+    techStack: ["React Native", "TypeScript", "Supabase", "Expo", "Android"],
+    category: "mobile",
+    note: "",
+    screenshotNames: ["blog-1.png", "blog-2.png", "blog-3.png", "blog-4.png"],
+  },
+  {
+    id: "proj-mobile-3",
     name: "MlRadioFM-RN",
     description:
       "A React Native radio streaming app that lets users browse and play online stations, with features like category filters and a robust audio player that prevents overlapping streams. It supports both English and Korean via a language toggle and centralized translation system.",
@@ -175,7 +185,7 @@ const projects: IProject[] = [
     screenshotNames: ["mlradiofm-rn-1.png", "mlradiofm-rn-2.png", "mlradiofm-rn-3.png", "mlradiofm-rn-4.png"],
   },
   {
-    id: "proj-mobile-3",
+    id: "proj-mobile-4",
     name: "MlRadioFM",
     description:
       "MlRadioFm is a macOS Swift app that streams Korean radio (KBS, MBC, SBS, etc.), some popular English music stations, and podcast stations with a modern, localized UI and an integrated audio player. It focuses on easy access to live stations, good listening controls, and a clean desktop experience.",
@@ -186,7 +196,7 @@ const projects: IProject[] = [
     screenshotNames: ["mlradiofm-01.png", "mlradiofm-02.png", "mlradiofm-03.png", "mlradiofm-04.png"],
   },
   {
-    id: "proj-mobile-4",
+    id: "proj-mobile-5",
     name: "Puzzle Board",
     description:
       "Slide puzzle is a sliding puzzle game built with React Native, TypeScript, and Expo, featuring 3×3, 4×4, and 5×5 boards. It offers both classic number mode and a photo mode where you can use your own images, with smooth animations and solvable puzzle generation.",
@@ -197,7 +207,7 @@ const projects: IProject[] = [
     screenshotNames: ["puzzle-1.png", "puzzle-2.png", "puzzle-3.png", "puzzle-4.png"],
   },
   {
-    id: "proj-mobile-5",
+    id: "proj-mobile-6",
     name: "Omok (Gomoku) Game",
     description:
       "This is a React Native (Expo + TypeScript) implementation of the classic 15×15 Gomoku game, supporting both player-vs-player and player-vs-AI modes. It includes win/draw detection, a Korean UI, optional per-turn timer, and a heuristic-based AI that evaluates and selects moves.",
@@ -208,7 +218,7 @@ const projects: IProject[] = [
     screenshotNames: ["omok-1.png", "omok-2.png", "omok-3.png", "omok-4.png"],
   },
   {
-    id: "proj-mobile-6",
+    id: "proj-mobile-7",
     name: "Bulls & Cows",
     description:
       "A number baseball game built with React Native and TypeScript using Expo, where players guess a secret number with unique digits (including 0) and get Strike, Ball, or Out feedback on each attempt.",
@@ -218,7 +228,7 @@ const projects: IProject[] = [
     screenshotNames: ["bulls-cows-1.png", "bulls-cows-2.png", "bulls-cows-3.png", "bulls-cows-4.png"],
   },
   {
-    id: "proj-mobile-7",
+    id: "proj-mobile-8",
     name: "Candy Break",
     description:
       "Candy Break is a React Native mobile game where players break candy blocks, featuring a custom game engine, fireworks animations, and audio/visual assets.",
@@ -229,7 +239,7 @@ const projects: IProject[] = [
     screenshotNames: ["candy-01.png", "candy-02.png", "candy-03.png", "candy-04.png"],
   },
   {
-    id: "proj-mobile-8",
+    id: "proj-mobile-9",
     name: "Marbles Game",
     description:
       "Marbles Game is a React Native mobile game where players compete in marble challenges, featuring a custom game engine, animations, and audio/visual assets.",
@@ -240,7 +250,7 @@ const projects: IProject[] = [
     screenshotNames: ["marbles-01.png", "marbles-02.png", "marbles-03.png", "marbles-04.png"],
   },
   {
-    id: "proj-mobile-9",
+    id: "proj-mobile-10",
     name: "Color Flow Maze",
     description:
       "A sliding-puzzle mobile game built with React Native and Expo. Navigate a player token across a grid-based maze — you slide until you hit a wall, and you must stop exactly on the gold tile to win. Beat all 50 procedurally generated levels to complete the game.",
