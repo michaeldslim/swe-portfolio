@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { IExperience, INavItem, IProject, ProjectCategory, ThemeName } from "@/types";
+import type { IExperience, INavItem, IProject, ThemeName } from "@/types";
 import { useTheme } from "./ThemeProvider";
 
 const enableThemeSwitcher =
@@ -180,6 +180,7 @@ const projects: IProject[] = [
       "A React Native radio streaming app that lets users browse and play online stations, with features like category filters and a robust audio player that prevents overlapping streams. It supports both English and Korean via a language toggle and centralized translation system.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/MlRadioFm-RN/releases/latest",
+    iosHref: "",
     category: "mobile",
     note: "",
     screenshotNames: ["mlradiofm-rn-1.png", "mlradiofm-rn-2.png", "mlradiofm-rn-3.png", "mlradiofm-rn-4.png"],
@@ -202,6 +203,7 @@ const projects: IProject[] = [
       "Slide puzzle is a sliding puzzle game built with React Native, TypeScript, and Expo, featuring 3×3, 4×4, and 5×5 boards. It offers both classic number mode and a photo mode where you can use your own images, with smooth animations and solvable puzzle generation.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/puzzle-RN/releases/latest",
+    iosHref: "",
     category: "mobile",
     note: "",
     screenshotNames: ["puzzle-1.png", "puzzle-2.png", "puzzle-3.png", "puzzle-4.png"],
@@ -213,6 +215,7 @@ const projects: IProject[] = [
       "This is a React Native (Expo + TypeScript) implementation of the classic 15×15 Gomoku game, supporting both player-vs-player and player-vs-AI modes. It includes win/draw detection, a Korean UI, optional per-turn timer, and a heuristic-based AI that evaluates and selects moves.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/gomoku-game/releases/latest",
+    iosHref: "",
     category: "mobile",
     note: "",
     screenshotNames: ["omok-1.png", "omok-2.png", "omok-3.png", "omok-4.png"],
@@ -222,7 +225,8 @@ const projects: IProject[] = [
     name: "Bulls & Cows",
     description:
       "A number baseball game built with React Native and TypeScript using Expo, where players guess a secret number with unique digits (including 0) and get Strike, Ball, or Out feedback on each attempt.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    iosHref: "",
     category: "mobile",
     note: "",
     screenshotNames: ["bulls-cows-1.png", "bulls-cows-2.png", "bulls-cows-3.png", "bulls-cows-4.png"],
@@ -234,6 +238,7 @@ const projects: IProject[] = [
       "Candy Break is a React Native mobile game where players break candy blocks, featuring a custom game engine, fireworks animations, and audio/visual assets.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/candy-break/releases/latest",
+    iosHref: "",
     category: "mobile",
     note: "",
     screenshotNames: ["candy-01.png", "candy-02.png", "candy-03.png", "candy-04.png"],
@@ -245,6 +250,7 @@ const projects: IProject[] = [
       "Marbles Game is a React Native mobile game where players compete in marble challenges, featuring a custom game engine, animations, and audio/visual assets.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/marbles-game/releases/latest",
+    iosHref: "",
     category: "mobile",
     note: "",
     screenshotNames: ["marbles-01.png", "marbles-02.png", "marbles-03.png", "marbles-04.png"],
@@ -256,6 +262,7 @@ const projects: IProject[] = [
       "A sliding-puzzle mobile game built with React Native and Expo. Navigate a player token across a grid-based maze — you slide until you hit a wall, and you must stop exactly on the gold tile to win. Beat all 50 procedurally generated levels to complete the game.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/color-flow-maze/releases/latest",
+    iosHref: "",
     category: "mobile",
     note: "",
     screenshotNames: ["maze-1.png", "maze-2.png", "maze-3.png", "maze-4.png"],
@@ -266,34 +273,58 @@ const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 fi
 
 const imageSrc = (filename: string) => `/images/${filename}`;
 
-const downloadLabels: Record<ProjectCategory, string> = {
-  mobile: "Download for Android",
-  macos: "Download for macOS",
-  ios: "Download for iOS",
-  web: "Download",
-  other: "Download",
-};
+function DownloadLink({ href, label }: { href?: string; label: string }) {
+  const trimmed = href?.trim();
+  const isExternal = trimmed?.startsWith("http") ?? false;
+
+  if (!trimmed) {
+    return <span className="font-normal text-foreground/40">[{label}]</span>;
+  }
+
+  return (
+    <a
+      href={trimmed}
+      className="font-normal text-accent hover:underline"
+      {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      [{label}]
+    </a>
+  );
+}
 
 function ProjectTitle({ project }: { project: IProject }) {
+  if (project.category === "mobile") {
+    return (
+      <div className="text-sm font-semibold">
+        <h3>{project.name}</h3>
+        <div>
+          <DownloadLink href={project.href} label="Download for Android" />
+        </div>
+        <div>
+          <DownloadLink href={project.iosHref} label="Download for iOS" />
+        </div>
+      </div>
+    );
+  }
+
   const href = project.href?.trim();
   const isExternal = href?.startsWith("http") ?? false;
 
   return (
-    <h3 className="text-sm font-semibold">
-      {project.name}
+    <div className="text-sm font-semibold">
+      <h3>{project.name}</h3>
       {href ? (
-        <>
-          {" "}
+        <div>
           <a
             href={href}
-            className="text-accent hover:underline"
+            className="font-normal text-accent hover:underline"
             {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           >
-            [{downloadLabels[project.category]}]
+            [{project.category === "macos" ? "Download for macOS" : "Download"}]
           </a>
-        </>
+        </div>
       ) : null}
-    </h3>
+    </div>
   );
 }
 

@@ -22,6 +22,7 @@ export interface IProject {
   description: string;
   techStack: string[];
   href?: string;
+  iosHref?: string;
   category: ProjectCategory;
   note?: string;
   screenshotNames?: string[];
