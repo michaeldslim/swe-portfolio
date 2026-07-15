@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import type { IExperience, INavItem, IProject, ThemeName } from "@/types";
-import { useTheme } from "./ThemeProvider";
-
-const enableThemeSwitcher =
-  process.env.NEXT_PUBLIC_ENABLE_THEME_SWITCHER === "true";
+import type { IExperience, INavItem, IProject } from "@/types";
 
 type ModalImage = {
   src: string;
@@ -30,8 +26,6 @@ function ScreenshotModal({
     document.addEventListener("keydown", onKeyDown);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
-    // Move focus into the modal for keyboard users.
     closeButtonRef.current?.focus();
 
     return () => {
@@ -42,12 +36,11 @@ function ScreenshotModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-8 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-off-black-ink/90 px-4 py-8"
       role="dialog"
       aria-modal="true"
       aria-label="Screenshot preview"
       onMouseDown={(event) => {
-        // Close on backdrop click, ignore clicks that start within the dialog content.
         if (event.target === event.currentTarget) onClose();
       }}
     >
@@ -57,13 +50,13 @@ function ScreenshotModal({
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="rounded-full border border-white/15 bg-background/60 px-4 py-2 text-xs font-medium text-foreground/80 shadow-sm shadow-black/40 transition hover:bg-background/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+            className="rounded-[28px] bg-pure-white px-5 py-2 text-sm font-medium text-off-black-ink transition hover:bg-off-white-canvas focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-lime"
             aria-label="Close screenshot preview"
           >
             Close
           </button>
         </div>
-        <div className="relative h-[70vh] w-full overflow-hidden rounded-2xl border border-white/15 bg-black/40 shadow-lg shadow-black/60">
+        <div className="relative h-[70vh] w-full overflow-hidden rounded-[28px] bg-deep-charcoal">
           <Image
             src={image.src}
             alt={image.alt}
@@ -269,22 +262,35 @@ const projects: IProject[] = [
   },
 ];
 
-const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 first:border-t-0";
-
 const imageSrc = (filename: string) => `/images/${filename}`;
+
+const sectionShell = "mx-auto w-full max-w-[1200px] px-5 sm:px-6 lg:px-8";
+const sectionPadding = "py-16 sm:py-20 md:py-24";
+
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-graphite">
+      {children}
+    </p>
+  );
+}
+
+function SectionDivider() {
+  return <hr className="border-0 border-t border-ash" />;
+}
 
 function DownloadLink({ href, label }: { href?: string; label: string }) {
   const trimmed = href?.trim();
   const isExternal = trimmed?.startsWith("http") ?? false;
 
   if (!trimmed) {
-    return <span className="font-normal text-foreground/40">[{label}]</span>;
+    return <span className="text-graphite">[{label}]</span>;
   }
 
   return (
     <a
       href={trimmed}
-      className="font-normal text-accent hover:underline"
+      className="border-b border-off-black-ink text-off-black-ink transition hover:text-graphite"
       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       [{label}]
@@ -292,15 +298,27 @@ function DownloadLink({ href, label }: { href?: string; label: string }) {
   );
 }
 
+function TechTag({ label, onParchment = false }: { label: string; onParchment?: boolean }) {
+  return (
+    <span
+      className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em] text-off-black-ink ${
+        onParchment ? "bg-pure-white" : "bg-off-white-canvas"
+      }`}
+    >
+      {label}
+    </span>
+  );
+}
+
 function ProjectTitle({ project }: { project: IProject }) {
   if (project.category === "mobile") {
     return (
-      <div className="text-sm font-semibold">
-        <h3>{project.name}</h3>
-        <div>
+      <div>
+        <h3 className="text-[22px] font-medium leading-[1.18] text-off-black-ink">{project.name}</h3>
+        <div className="mt-1 text-sm">
           <DownloadLink href={project.href} label="Download for Android" />
         </div>
-        <div>
+        <div className="text-sm">
           <DownloadLink href={project.iosHref} label="Download for iOS" />
         </div>
       </div>
@@ -311,13 +329,13 @@ function ProjectTitle({ project }: { project: IProject }) {
   const isExternal = href?.startsWith("http") ?? false;
 
   return (
-    <div className="text-sm font-semibold">
-      <h3>{project.name}</h3>
+    <div>
+      <h3 className="text-[22px] font-medium leading-[1.18] text-off-black-ink">{project.name}</h3>
       {href ? (
-        <div>
+        <div className="mt-1 text-sm">
           <a
             href={href}
-            className="font-normal text-accent hover:underline"
+            className="border-b border-off-black-ink text-off-black-ink transition hover:text-graphite"
             {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           >
             [{project.category === "macos" ? "Download for macOS" : "Download"}]
@@ -328,11 +346,31 @@ function ProjectTitle({ project }: { project: IProject }) {
   );
 }
 
+function ScreenshotButton({
+  src,
+  alt,
+  onClick,
+}: {
+  src: string;
+  alt: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className="relative h-40 w-24 shrink-0 cursor-pointer overflow-hidden rounded-[18px] bg-off-white-canvas transition hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-lime"
+      onClick={onClick}
+      aria-label={alt}
+    >
+      <Image src={src} alt={alt} fill sizes="96px" className="object-cover" />
+    </button>
+  );
+}
+
 export default function Home() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [modalImage, setModalImage] = useState<ModalImage | null>(null);
   const lastActiveElementRef = useRef<HTMLElement | null>(null);
-  const { theme, handleThemeChange } = useTheme();
   const webProjects = projects.filter((project) => project.category === "web");
   const macosProjects = projects.filter((project) => project.category === "macos");
   const mobileProjects = projects.filter((project) => project.category === "mobile");
@@ -348,61 +386,55 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen overflow-x-hidden bg-pure-white text-off-black-ink">
       {modalImage && <ScreenshotModal image={modalImage} onClose={closeModal} />}
-      <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <div className="text-sm font-mono uppercase tracking-[0.2em] text-accent">
+
+      {/* Header */}
+      <header className="sticky top-0 z-50 border-b border-ash bg-pure-white">
+        <div className={`${sectionShell} flex items-center justify-between py-4 sm:py-5`}>
+          <a href="#home" className="text-base font-medium text-off-black-ink">
             Michael Lim
-          </div>
-          <div className="flex items-center gap-3">
-            <nav className="hidden gap-4 text-xs sm:flex sm:text-sm">
-              {navItems.map((item) => (
+          </a>
+          <div className="flex items-center gap-6">
+            <nav className="hidden items-center gap-6 sm:flex">
+              {navItems.slice(1, -1).map((item) => (
                 <a
                   key={item.id}
                   href={item.href}
-                  className="text-foreground/70 transition hover:text-accent"
+                  className="text-sm font-medium text-graphite transition hover:text-off-black-ink"
                 >
                   {item.label}
                 </a>
               ))}
             </nav>
-            {enableThemeSwitcher && (
-              <label className="flex items-center gap-1 rounded-md border border-white/10 bg-black/20 px-2 py-1 text-[10px] text-foreground/70">
-                <span className="font-mono uppercase tracking-[0.16em]">Theme</span>
-                <select
-                  value={theme}
-                  onChange={(event) => handleThemeChange(event.target.value as ThemeName)}
-                  className="bg-transparent text-[10px] text-foreground/80 focus:outline-none"
-                >
-                  <option value="dark-teal">Dark teal</option>
-                  <option value="dark-green">Dark green</option>
-                  <option value="light-neutral">Light</option>
-                </select>
-              </label>
-            )}
+            <a
+              href="#contact"
+              className="hidden rounded-[28px] bg-electric-lime px-5 py-3 text-sm font-medium text-off-black-ink transition hover:opacity-90 sm:inline-flex"
+            >
+              Contact
+            </a>
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md border border-white/10 bg-black/20 px-2 py-1 text-xs text-foreground/80 shadow-sm shadow-black/30 sm:hidden"
+              className="inline-flex items-center gap-2 text-sm font-medium text-off-black-ink sm:hidden"
               onClick={() => setIsMobileNavOpen((open) => !open)}
               aria-label="Toggle navigation menu"
             >
-              <span className="mr-1 text-[10px] font-mono uppercase tracking-[0.2em]">Menu</span>
-              <span className="flex flex-col gap-0.5">
-                <span className="h-0.5 w-3 bg-current" />
-                <span className="h-0.5 w-3 bg-current" />
+              Menu
+              <span className="flex flex-col gap-1">
+                <span className="h-px w-4 bg-off-black-ink" />
+                <span className="h-px w-4 bg-off-black-ink" />
               </span>
             </button>
           </div>
         </div>
         {isMobileNavOpen && (
-          <nav className="border-t border-white/10 bg-background/95 px-6 py-3 sm:hidden">
-            <div className="mx-auto flex max-w-5xl flex-col gap-2 text-xs">
+          <nav className="border-t border-ash py-4 sm:hidden">
+            <div className={`${sectionShell} flex flex-col gap-3`}>
               {navItems.map((item) => (
                 <a
                   key={item.id}
                   href={item.href}
-                  className="py-1 text-foreground/80 transition hover:text-accent"
+                  className="py-1 text-sm font-medium text-off-black-ink"
                   onClick={() => setIsMobileNavOpen(false)}
                 >
                   {item.label}
@@ -413,28 +445,28 @@ export default function Home() {
         )}
       </header>
 
-      <main className="mx-auto flex max-w-5xl flex-col px-6 pb-24 pt-10">
-        <section id="home" className="scroll-mt-24 pb-16 pt-8 sm:pt-12">
-          <div>
-            <p className="text-xs font-mono uppercase tracking-[0.25em] text-accent">
-              Senior Software Engineer (Front-End Focus with Back-End Experience)
-            </p>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
+      <main>
+        {/* Hero — Lime Accent Block */}
+        <section id="home" className="scroll-mt-24 bg-electric-lime">
+          <div className={`${sectionShell} ${sectionPadding}`}>
+            <Eyebrow>Senior Software Engineer</Eyebrow>
+            <h1 className="mt-4 max-w-4xl text-[36px] font-medium leading-[0.95] tracking-[-0.03em] text-off-black-ink sm:text-[52px] md:text-[72px] lg:text-[80px]">
               I build clear, performant web and mobile experiences.
             </h1>
-            <p className="mt-4 text-sm leading-relaxed text-foreground/70 sm:text-base">
-              Senior Software Engineer with over 13 years of experience architecting scalable, accessible web and mobile applications using React, TypeScript, and React Native. I specialize in building high-performance front-end architectures and robust design systems, including the development of a WCAG 2.1 AA-compliant system that increased delivery efficiency by 20% for over 1M users. A collaborative leader experienced in working across UX, product, and backend teams to integrate CI/CD pipelines and deliver high-quality, reliable features in distributed, cross-functional environments.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-off-black-ink/80">
+              Senior Software Engineer with over 13 years of experience architecting scalable,
+              accessible web and mobile applications using React, TypeScript, and React Native.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3 sm:justify-start">
+            <div className="mt-10 flex flex-wrap gap-4">
               <a
                 href="#experience"
-                className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-background shadow-sm shadow-accent/40 transition hover:bg-accent-soft"
+                className="rounded-[28px] bg-off-black-ink px-6 py-3.5 text-sm font-medium text-off-white-canvas transition hover:opacity-90"
               >
                 View experience
               </a>
               <a
                 href="#projects"
-                className="rounded-full border border-accent/40 px-5 py-2 text-sm font-medium text-accent transition hover:border-accent hover:bg-accent/5"
+                className="border-b border-off-black-ink pb-0.5 text-sm font-medium text-off-black-ink transition hover:text-graphite"
               >
                 View projects
               </a>
@@ -442,356 +474,301 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="about" className={sectionClassName}>
-          <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">About</h2>
-          <div className="mt-4 space-y-4 text-sm leading-relaxed text-foreground/80 sm:text-base">
-            <p>
-              I hold a master&apos;s degree in Engineering Technology and a bachelor&apos;s degree
-              in Computer Science. With over 13 years of experience in web development, I have built
-              a strong foundation in designing and developing dynamic, scalable web and mobile
-              applications using React, React Native, TypeScript, and modern JavaScript tools. My
-              passion for crafting intuitive user experiences, along with my ability to collaborate
-              effectively across cross-functional teams, makes me a strong fit for this role.
-            </p>
-            <p>
-              Most recently, I served as a Technical Consultant at Northwell Health, where I provided specialized front-end development expertise and partnered closely with internal teams to drive digital transformation initiatives. I played a key role in implementing GCP Vertex AI features on the Google Cloud Platform, enhancing user search experiences, and contributed to the MyNorthwell application, ensuring seamless accessibility across web
-              and mobile platforms. My experience with database management, including MSSQL, PostgreSQL, and Sequelize migrations, has further enabled me to optimize data handling
-              and performance.
-            </p>
+        {/* About — White Canvas */}
+        <section id="about" className="scroll-mt-24 bg-pure-white">
+          <div className={`${sectionShell} ${sectionPadding}`}>
+            <Eyebrow>About</Eyebrow>
+            <h2 className="mt-3 text-[28px] font-medium leading-[1.14] tracking-[-0.02em] text-off-black-ink sm:text-[36px] md:text-[40px]">
+              Engineering with clarity and care.
+            </h2>
+            <div className="mt-8 space-y-5 text-base leading-relaxed text-graphite">
+              <p>
+                I hold a master&apos;s degree in Engineering Technology and a bachelor&apos;s degree
+                in Computer Science. With over 13 years of experience in web development, I have built
+                a strong foundation in designing and developing dynamic, scalable web and mobile
+                applications using React, React Native, TypeScript, and modern JavaScript tools.
+              </p>
+              <p>
+                Most recently, I served as a Technical Consultant at Northwell Health, where I provided
+                specialized front-end development expertise and partnered closely with internal teams
+                to drive digital transformation initiatives. I played a key role in implementing GCP
+                Vertex AI features on the Google Cloud Platform, enhancing user search experiences,
+                and contributed to the MyNorthwell application.
+              </p>
+            </div>
           </div>
         </section>
 
-        <section id="experience" className={sectionClassName}>
-          <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Experience</h2>
-          <div className="mt-6 space-y-4">
-            {experiences.map((experience) => (
-              <article
-                key={experience.id}
-                className="rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm shadow-black/30 backdrop-blur-sm"
-              >
-                <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
-                  <div>
-                    <h3 className="text-sm font-semibold sm:text-base">{experience.role}</h3>
-                    <p className="text-xs text-foreground/60 sm:text-sm">{experience.company}</p>
+        <SectionDivider />
+
+        {/* Experience — Parchment Band */}
+        <section id="experience" className="scroll-mt-24 bg-off-white-canvas">
+          <div className={`${sectionShell} ${sectionPadding}`}>
+            <Eyebrow>Experience</Eyebrow>
+            <h2 className="mt-3 text-[28px] font-medium leading-[1.14] tracking-[-0.02em] text-off-black-ink sm:text-[36px] md:text-[40px]">
+              13+ years building products.
+            </h2>
+            <div className="mt-10 space-y-5">
+              {experiences.map((experience) => (
+                <article
+                  key={experience.id}
+                  className="rounded-[28px] bg-pure-white p-6 sm:p-8 md:p-10"
+                >
+                  <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
+                    <div>
+                      <h3 className="text-base font-medium text-off-black-ink sm:text-lg">
+                        {experience.role}
+                      </h3>
+                      <p className="mt-1 text-sm text-graphite">{experience.company}</p>
+                    </div>
+                    {experience.period && (
+                      <p className="text-sm text-graphite">{experience.period}</p>
+                    )}
                   </div>
-                  <p className="text-xs text-foreground/50 sm:text-xs">{experience.period}</p>
-                </div>
-                <p className="mt-3 text-xs leading-relaxed text-foreground/80 sm:text-sm">
-                  {experience.description}
+                  <p className="mt-4 text-sm leading-relaxed text-graphite sm:text-base">
+                    {experience.description}
+                  </p>
+                  {experience.techStack && experience.techStack.length > 0 && (
+                    <div className="mt-5 flex flex-wrap gap-1.5">
+                      {experience.techStack.map((tech) => (
+                        <TechTag key={tech} label={tech} />
+                      ))}
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <SectionDivider />
+
+        {/* Projects — White Canvas */}
+        <section id="projects" className="scroll-mt-24 bg-pure-white">
+          <div className={`${sectionShell} ${sectionPadding}`}>
+            <Eyebrow>Projects</Eyebrow>
+            <h2 className="mt-3 text-[28px] font-medium leading-[1.14] tracking-[-0.02em] text-off-black-ink sm:text-[36px] md:text-[40px]">
+              Selected work across web, mobile, and macOS.
+            </h2>
+
+            <div className="mt-12 grid gap-10 md:grid-cols-2 md:items-stretch">
+              {/* Web */}
+              <div className="flex min-w-0 flex-col gap-5">
+                <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-graphite">
+                  Web
                 </p>
-                {experience.techStack && experience.techStack.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {experience.techStack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-full border border-white/10 bg-black/20 px-2.5 py-0.5 text-[11px] text-foreground/80"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="projects" className={sectionClassName}>
-          <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Projects</h2>
-
-          <div className="mt-6 grid gap-8 md:grid-cols-2">
-            <div className="space-y-4">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
-                Web
-              </h3>
-              <div className="grid gap-4">
                 {webProjects.map((project) => {
                   const primaryScreenshot = project.screenshotNames?.[0];
-
                   return (
                     <article
                       key={project.id}
-                      className="flex flex-col justify-between rounded-xl border border-white/10 bg-white/5 p-4 text-sm shadow-sm shadow-black/30 backdrop-blur-sm"
+                      className="flex min-w-0 flex-1 flex-col rounded-[28px] bg-off-white-canvas p-6 sm:p-8"
                     >
-                      <div>
-                        <ProjectTitle project={project} />
-                        <p className="mt-2 text-xs leading-relaxed text-foreground/80">
-                          {project.description}
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {project.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="rounded-full border border-white/10 bg-black/20 px-2.5 py-0.5 text-[11px] text-foreground/80"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="mt-3 flex items-center gap-3">
-                          <div className="relative h-52 w-full max-w-xs rounded-xl border border-accent-soft/30 bg-accent-soft/10 shadow-inner shadow-black/40">
-                            <div className="absolute inset-x-4 top-2 flex items-center gap-1">
-                              <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-                              <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-                              <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-                            </div>
-                            <div className="absolute inset-x-3 bottom-2 top-5 overflow-hidden rounded-lg border border-white/15 bg-black/60">
-                              {primaryScreenshot ? (
-                                <button
-                                  type="button"
-                                  className="relative block h-full w-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-                                  // onClick={() =>
-                                  //   openModal({
-                                  //     src: imageSrc(primaryScreenshot),
-                                  //     alt: `${project.name} screenshot`,
-                                  //   })
-                                  // }
-                                  aria-label={`Open ${project.name} screenshot`}
-                                >
-                                  <Image
-                                    src={imageSrc(primaryScreenshot)}
-                                    alt={`${project.name} screenshot`}
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 320px"
-                                    className="object-cover"
-                                  />
-                                </button>
-                              ) : (
-                                <div className="flex h-full w-full items-center justify-center px-3 text-center">
-                                  <span className="text-[10px] text-foreground/70">
-                                    web-screenshot.png
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
+                      <ProjectTitle project={project} />
+                      <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-graphite">
+                        {project.description}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {project.techStack.map((tech) => (
+                          <TechTag key={tech} label={tech} onParchment />
+                        ))}
                       </div>
+                      {primaryScreenshot && (
+                        <button
+                          type="button"
+                          className="relative mt-auto h-52 w-full min-w-0 shrink-0 cursor-pointer overflow-hidden rounded-[18px] bg-pure-white pt-5 transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-lime"
+                          onClick={() =>
+                            openModal({
+                              src: imageSrc(primaryScreenshot),
+                              alt: `${project.name} screenshot`,
+                            })
+                          }
+                          aria-label={`Open ${project.name} screenshot`}
+                        >
+                          <Image
+                            src={imageSrc(primaryScreenshot)}
+                            alt={`${project.name} screenshot`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 480px"
+                            className="object-cover"
+                          />
+                        </button>
+                      )}
                     </article>
                   );
                 })}
               </div>
-            </div>
 
-            <div className="space-y-4">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
-                macOS
-              </h3>
-              <div className="grid gap-4">
+              {/* macOS */}
+              <div className="flex min-w-0 flex-col gap-5">
+                <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-graphite">
+                  macOS
+                </p>
                 {macosProjects.map((project) => {
                   const hasScreenshots =
                     project.screenshotNames && project.screenshotNames.length > 0;
-
                   return (
                     <article
                       key={project.id}
-                      className="flex flex-col justify-between rounded-xl border border-white/10 bg-white/5 p-4 text-sm shadow-sm shadow-black/30 backdrop-blur-sm"
+                      className="flex min-w-0 flex-1 flex-col rounded-[28px] bg-off-white-canvas p-6 sm:p-8"
                     >
-                      <div>
-                        <ProjectTitle project={project} />
-                        <p className="mt-2 text-xs leading-relaxed text-foreground/80">
-                          {project.description}
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {project.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="rounded-full border border-white/10 bg-black/20 px-2.5 py-0.5 text-[11px] text-foreground/80"
-                            >
-                              {tech}
-                            </span>
+                      <ProjectTitle project={project} />
+                      <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-graphite">
+                        {project.description}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {project.techStack.map((tech) => (
+                          <TechTag key={tech} label={tech} onParchment />
+                        ))}
+                      </div>
+                      {hasScreenshots && (
+                        <div className="mt-auto flex min-w-0 gap-3 overflow-x-auto pt-5 pb-2">
+                          {project.screenshotNames!.map((screenshotName, index) => (
+                            <ScreenshotButton
+                              key={screenshotName ?? index}
+                              src={imageSrc(screenshotName)}
+                              alt={`${project.name} screenshot ${index + 1}`}
+                              onClick={() =>
+                                openModal({
+                                  src: imageSrc(screenshotName),
+                                  alt: `${project.name} screenshot ${index + 1}`,
+                                })
+                              }
+                            />
                           ))}
                         </div>
-                        <div className="mt-3">
-	                          <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
-	                            {hasScreenshots ? (
-	                              project.screenshotNames!.map((screenshotName, index) => (
-	                                <button
-	                                  type="button"
-	                                  key={screenshotName ?? index}
-	                                  className="relative h-40 w-24 shrink-0 cursor-zoom-in rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50 transition hover:border-accent-soft/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-	                                  onClick={() =>
-	                                    openModal({
-	                                      src: imageSrc(screenshotName),
-	                                      alt: `${project.name} screenshot ${index + 1}`,
-	                                    })
-	                                  }
-	                                  aria-label={`Open ${project.name} screenshot ${index + 1}`}
-	                                >
-	                                  <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-	                                    <Image
-	                                      src={imageSrc(screenshotName)}
-	                                      alt={`${project.name} screenshot ${index + 1}`}
-	                                      fill
-	                                      sizes="96px"
-	                                      className="object-cover"
-	                                    />
-	                                  </div>
-	                                  <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-	                                  <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-	                                </button>
-	                              ))
-	                            ) : (
-	                              <div className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50">
-	                                <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-	                                  <div className="flex h-full w-full items-center justify-center px-2 text-center">
-                                    <span className="text-[10px] text-foreground/70">
-                                      macos-screenshot.png
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-                                <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-                              </div>
-                            )}
-                          </div>
-                        </div>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Mobile */}
+            <div className="mt-16">
+              <p className="text-[12px] font-medium uppercase tracking-[0.1em] text-graphite">
+                Mobile
+              </p>
+              <div className="mt-5 grid grid-cols-1 gap-10 md:grid-cols-2">
+                {mobileProjects.map((project) => {
+                  const hasScreenshots =
+                    project.screenshotNames && project.screenshotNames.length > 0;
+                  return (
+                    <article
+                      key={project.id}
+                      className="min-w-0 rounded-[28px] bg-off-white-canvas p-6 sm:p-8"
+                    >
+                      <ProjectTitle project={project} />
+                      <p className="mt-3 text-sm leading-relaxed text-graphite">
+                        {project.description}
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        {project.techStack.map((tech) => (
+                          <TechTag key={tech} label={tech} onParchment />
+                        ))}
                       </div>
+                      {hasScreenshots && (
+                        <div className="mt-5 flex min-w-0 gap-3 overflow-x-auto pb-2">
+                          {project.screenshotNames!.map((screenshotName, index) => (
+                            <ScreenshotButton
+                              key={screenshotName ?? index}
+                              src={imageSrc(screenshotName)}
+                              alt={`${project.name} screenshot ${index + 1}`}
+                              onClick={() =>
+                                openModal({
+                                  src: imageSrc(screenshotName),
+                                  alt: `${project.name} screenshot ${index + 1}`,
+                                })
+                              }
+                            />
+                          ))}
+                        </div>
+                      )}
                     </article>
                   );
                 })}
               </div>
             </div>
           </div>
-
-          <div className="mt-10 space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
-              Mobile
-            </h3>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {mobileProjects.map((project) => {
-                const hasScreenshots =
-                  project.screenshotNames && project.screenshotNames.length > 0;
-
-                return (
-                  <article
-                    key={project.id}
-                    className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-4 text-sm shadow-sm shadow-black/30 backdrop-blur-sm"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <ProjectTitle project={project} />
-                        <p className="mt-1 text-xs leading-relaxed text-foreground/80">
-                          {project.description}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-1 flex flex-wrap gap-2">
-                      {project.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="rounded-full border border-white/10 bg-black/20 px-2.5 py-0.5 text-[11px] text-foreground/80"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
-	                      <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
-	                        {hasScreenshots ? (
-	                          project.screenshotNames!.map((screenshotName, index) => (
-	                            <button
-	                              type="button"
-	                              key={screenshotName ?? index}
-	                              className="relative h-40 w-24 shrink-0 cursor-zoom-in rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50 transition hover:border-accent-soft/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-	                              onClick={() =>
-	                                openModal({
-	                                  src: imageSrc(screenshotName),
-	                                  alt: `${project.name} screenshot ${index + 1}`,
-	                                })
-	                              }
-	                              aria-label={`Open ${project.name} screenshot ${index + 1}`}
-	                            >
-	                              <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-	                                <Image
-	                                  src={imageSrc(screenshotName)}
-	                                  alt={`${project.name} screenshot ${index + 1}`}
-	                                  fill
-	                                  sizes="96px"
-	                                  className="object-cover"
-	                                />
-	                              </div>
-	                              <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-	                              <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-	                            </button>
-	                          ))
-	                        ) : (
-	                          <div className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50">
-	                            <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-	                              <div className="flex h-full w-full items-center justify-center px-2 text-center">
-                                <span className="text-[10px] text-foreground/70">
-                                  screenshot.png
-                                </span>
-                              </div>
-                            </div>
-                            <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-                            <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-                          </div>
-                        )}
-                      </div>
-                      <p className="flex-1 text-xs text-foreground/60">
-                        {project.note ?? "Add a screenshot of the app UI here."}
-                      </p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
         </section>
 
-        <section id="contact" className={sectionClassName}>
-          <div className="flex flex-col gap-8 md:flex-row md:items-center">
-            <div className="md:w-2/3">
-              <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Contact</h2>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-base">
-                I am always open to discussing frontend architecture, React and React Native
-                projects, or mentoring opportunities. I am available on social medias provided
-                below. You can message me, I will reply as soon as possible.
-              </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm sm:justify-start">
-                <a
-                  href="mailto:michaelds.lim@gmail.com"
-                  className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-background shadow-sm shadow-accent/40 transition hover:bg-accent-soft"
-                >
-                  Email
-                </a>
-                <a
-                  href="https://github.com/michaeldslim/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-accent/40 px-5 py-2 text-sm font-medium text-accent transition hover:border-accent hover:bg-accent/5"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/codeinlife/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-accent/40 px-5 py-2 text-sm font-medium text-accent transition hover:border-accent hover:bg-accent/5"
-                >
-                  LinkedIn
-                </a>
-              </div>
-            </div>
+        <SectionDivider />
 
-            <div className="md:w-1/3">
-              <div className="mt-8 flex justify-center md:mt-0">
-                <div className="rounded-3xl border border-accent-soft/40 bg-background/60 p-1.5 shadow-lg shadow-black/40">
-                  <div className="relative h-44 w-44 overflow-hidden rounded-2xl border border-accent-soft/60 bg-white/5">
-                    <Image
-                      src={imageSrc("michael.jpg")}
-                      alt="Portrait of Michael Lim"
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                  </div>
+        {/* Contact — Dark Island */}
+        <section id="contact" className="scroll-mt-24 bg-off-black-ink">
+          <div className={`${sectionShell} ${sectionPadding}`}>
+            <div className="flex flex-col items-center gap-12 text-center md:flex-row md:items-start md:justify-between md:text-left">
+              <div className="w-full md:max-w-xl">
+                <p className="text-[10px] font-medium uppercase tracking-[0.1em] text-ash">
+                  Contact
+                </p>
+                <h2 className="mt-3 text-[28px] font-medium leading-[1.14] tracking-[-0.02em] text-off-white-canvas sm:text-[40px]">
+                  Let&apos;s build something together.
+                </h2>
+                <p className="mt-5 text-base leading-relaxed text-ash">
+                  I am always open to discussing frontend architecture, React and React Native
+                  projects, or mentoring opportunities. Message me and I will reply as soon as
+                  possible.
+                </p>
+                <div className="mt-8 flex flex-wrap justify-center gap-4 md:justify-start">
+                  <a
+                    href="mailto:michaelds.lim@gmail.com"
+                    className="rounded-[28px] bg-electric-lime px-6 py-3.5 text-sm font-medium text-off-black-ink transition hover:opacity-90"
+                  >
+                    Email
+                  </a>
+                  <a
+                    href="https://github.com/michaeldslim/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="border-b border-off-white-canvas pb-0.5 text-sm font-medium text-off-white-canvas transition hover:text-ash"
+                  >
+                    GitHub
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/codeinlife/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="border-b border-off-white-canvas pb-0.5 text-sm font-medium text-off-white-canvas transition hover:text-ash"
+                  >
+                    LinkedIn
+                  </a>
+                </div>
+              </div>
+              <div className="shrink-0">
+                <div className="relative h-48 w-48 overflow-hidden rounded-[28px] bg-deep-charcoal sm:h-56 sm:w-56">
+                  <Image
+                    src={imageSrc("michael.jpg")}
+                    alt="Portrait of Michael Lim"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="bg-off-black-ink">
+          <div className={`${sectionShell} border-t border-deep-charcoal py-8 sm:py-10`}>
+            <div className="flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:items-center sm:text-left">
+              <p className="text-sm text-ash">© {new Date().getFullYear()} Michael Lim</p>
+              <nav className="flex flex-wrap justify-center gap-4 sm:justify-end sm:gap-6">
+                {navItems.map((item) => (
+                  <a
+                    key={item.id}
+                    href={item.href}
+                    className="text-sm text-ash transition hover:text-off-white-canvas"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </div>
+        </footer>
       </main>
     </div>
   );

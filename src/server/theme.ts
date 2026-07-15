@@ -4,7 +4,7 @@ import type { ThemeName } from "@/types";
 import { hasSupabaseTheme, supabaseServerClient } from "./supabaseClient";
 
 const THEME_COOKIE_NAME = "anon_theme_id";
-const DEFAULT_THEME: ThemeName = "dark-green";
+const DEFAULT_THEME: ThemeName = "light-neutral";
 
 export async function getThemeForRequest(): Promise<ThemeName> {
   if (!hasSupabaseTheme || !supabaseServerClient) {
