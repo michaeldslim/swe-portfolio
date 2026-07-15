@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 import type { ThemeName } from "@/types";
 import { getThemeForRequest } from "../server/theme";
 import { ThemeProvider } from "./ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -32,9 +28,7 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme={theme} suppressHydrationWarning>
       <head />
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
+      <body className={`${inter.variable} antialiased bg-background text-foreground`}>
         <ThemeProvider initialTheme={theme}>{children}</ThemeProvider>
       </body>
     </html>
