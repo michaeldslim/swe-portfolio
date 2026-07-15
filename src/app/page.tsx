@@ -168,7 +168,7 @@ const projects: IProject[] = [
     name: "Mobile Blog App",
     description:
       "A React Native / Expo mobile journal for writing, reading, and browsing posts. Sign in with Google via Supabase Auth, then publish Markdown entries with images and tags, browse a searchable feed, explore posts on a calendar, and manage drafts from your profile.",
-    techStack: ["React Native", "TypeScript", "Supabase", "Expo", "Android"],
+    techStack: ["React Native", "TypeScript", "Supabase", "Expo", "Android", "iOS"],
     category: "mobile",
     note: "",
     screenshotNames: ["blog-1.png", "blog-2.png", "blog-3.png", "blog-4.png"],
@@ -200,7 +200,7 @@ const projects: IProject[] = [
     name: "Puzzle Board",
     description:
       "Slide puzzle is a sliding puzzle game built with React Native, TypeScript, and Expo, featuring 3×3, 4×4, and 5×5 boards. It offers both classic number mode and a photo mode where you can use your own images, with smooth animations and solvable puzzle generation.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/puzzle-RN/releases/latest",
     category: "mobile",
     note: "",
@@ -211,7 +211,7 @@ const projects: IProject[] = [
     name: "Omok (Gomoku) Game",
     description:
       "This is a React Native (Expo + TypeScript) implementation of the classic 15×15 Gomoku game, supporting both player-vs-player and player-vs-AI modes. It includes win/draw detection, a Korean UI, optional per-turn timer, and a heuristic-based AI that evaluates and selects moves.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/gomoku-game/releases/latest",
     category: "mobile",
     note: "",
@@ -222,7 +222,7 @@ const projects: IProject[] = [
     name: "Bulls & Cows",
     description:
       "A number baseball game built with React Native and TypeScript using Expo, where players guess a secret number with unique digits (including 0) and get Strike, Ball, or Out feedback on each attempt.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android"],
     category: "mobile",
     note: "",
     screenshotNames: ["bulls-cows-1.png", "bulls-cows-2.png", "bulls-cows-3.png", "bulls-cows-4.png"],
@@ -232,7 +232,7 @@ const projects: IProject[] = [
     name: "Candy Break",
     description:
       "Candy Break is a React Native mobile game where players break candy blocks, featuring a custom game engine, fireworks animations, and audio/visual assets.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/candy-break/releases/latest",
     category: "mobile",
     note: "",
@@ -243,7 +243,7 @@ const projects: IProject[] = [
     name: "Marbles Game",
     description:
       "Marbles Game is a React Native mobile game where players compete in marble challenges, featuring a custom game engine, animations, and audio/visual assets.",
-    techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
     href: "https://github.com/michaeldslim/marbles-game/releases/latest",
     category: "mobile",
     note: "",
