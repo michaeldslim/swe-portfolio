@@ -4,7 +4,7 @@ import type { ThemeName } from "@/types";
 import { hasSupabaseTheme, supabaseServerClient } from "./supabaseClient";
 
 const THEME_COOKIE_NAME = "anon_theme_id";
-const DEFAULT_THEME: ThemeName = "dark-green";
+const DEFAULT_THEME: ThemeName = "nintendo";
 
 export async function getThemeForRequest(): Promise<ThemeName> {
   if (!hasSupabaseTheme || !supabaseServerClient) {
@@ -28,7 +28,12 @@ export async function getThemeForRequest(): Promise<ThemeName> {
     return DEFAULT_THEME;
   }
 
-  if (data.theme === "dark-teal" || data.theme === "dark-green" || data.theme === "light-neutral") {
+  if (
+    data.theme === "nintendo" ||
+    data.theme === "dark-teal" ||
+    data.theme === "dark-green" ||
+    data.theme === "light-neutral"
+  ) {
     return data.theme;
   }
 

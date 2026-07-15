@@ -28,4 +28,4 @@ export interface IProject {
   screenshotNames?: string[];
 }
 
-export type ThemeName = "dark-teal" | "dark-green" | "light-neutral";
+export type ThemeName = "nintendo" | "dark-teal" | "dark-green" | "light-neutral";

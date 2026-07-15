@@ -1,25 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { VT323 } from "next/font/google";
 import "./globals.css";
 
 import type { ThemeName } from "@/types";
 import { getThemeForRequest } from "../server/theme";
 import { ThemeProvider } from "./ThemeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const vt323 = VT323({
+  variable: "--font-vt323",
+  weight: "400",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Michael Lim | Senior Frontend Engineer",
+  title: "Michael Lim | Senior Software Engineer",
   description:
-    "Portfolio of Michael Lim, a senior frontend engineer specializing in React, React Native, and TypeScript.",
+    "Portfolio of Michael Lim, a senior software engineer specializing in React, React Native, and TypeScript.",
 };
 
 export default async function RootLayout({
@@ -32,9 +28,7 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme={theme} suppressHydrationWarning>
       <head />
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
-      >
+      <body className={`${vt323.variable} bg-canvas text-ink antialiased`}>
         <ThemeProvider initialTheme={theme}>{children}</ThemeProvider>
       </body>
     </html>

@@ -30,8 +30,6 @@ function ScreenshotModal({
     document.addEventListener("keydown", onKeyDown);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
-    // Move focus into the modal for keyboard users.
     closeButtonRef.current?.focus();
 
     return () => {
@@ -42,39 +40,55 @@ function ScreenshotModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4 py-8 backdrop-blur-sm"
+      className="nintendo-modal-backdrop fixed inset-0 z-[100] flex items-center justify-center px-4 py-8"
       role="dialog"
       aria-modal="true"
       aria-label="Screenshot preview"
       onMouseDown={(event) => {
-        // Close on backdrop click, ignore clicks that start within the dialog content.
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div className="w-full max-w-5xl">
-        <div className="flex justify-end pb-3">
+      <div className="w-full max-w-4xl">
+        <div className="bevel-plate mb-2 flex items-center justify-between px-3 py-2">
+          <span className="type-ui-label text-ink">Screenshot Preview</span>
           <button
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="rounded-full border border-white/15 bg-background/60 px-4 py-2 text-xs font-medium text-foreground/80 shadow-sm shadow-black/40 transition hover:bg-background/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+            className="btn-amber"
             aria-label="Close screenshot preview"
           >
             Close
           </button>
         </div>
-        <div className="relative h-[70vh] w-full overflow-hidden rounded-2xl border border-white/15 bg-black/40 shadow-lg shadow-black/60">
+        <div className="nintendo-modal-frame relative h-[70vh] w-full overflow-hidden">
           <Image
             src={image.src}
             alt={image.alt}
             fill
             sizes="(max-width: 768px) 92vw, 900px"
-            className="object-contain"
+            className="object-contain p-2"
             priority
           />
         </div>
       </div>
     </div>
+  );
+}
+
+function ArrowIcon() {
+  return <span aria-hidden="true">›</span>;
+}
+
+function SectionLabelBar({ title }: { title: string }) {
+  return <div className="section-label-bar">{title}</div>;
+}
+
+function ArrowChip() {
+  return (
+    <span className="btn-arrow-chip" aria-hidden="true">
+      ›
+    </span>
   );
 }
 
@@ -84,6 +98,20 @@ const navItems: INavItem[] = [
   { id: "experience", label: "Experience", href: "#experience" },
   { id: "projects", label: "Projects", href: "#projects" },
   { id: "contact", label: "Contact", href: "#contact" },
+];
+
+const subNavItems = [
+  { label: "GitHub", href: "https://github.com/michaeldslim/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/codeinlife/" },
+  { label: "Email", href: "mailto:michaelds.lim@gmail.com" },
+  { label: "Resume", href: "#contact" },
+];
+
+const leftRailTabs = [
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Mobile", href: "#projects" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const experiences: IExperience[] = [
@@ -269,8 +297,6 @@ const projects: IProject[] = [
   },
 ];
 
-const sectionClassName = "scroll-mt-24 py-16 sm:py-20 border-t border-white/5 first:border-t-0";
-
 const imageSrc = (filename: string) => `/images/${filename}`;
 
 function DownloadLink({ href, label }: { href?: string; label: string }) {
@@ -278,13 +304,13 @@ function DownloadLink({ href, label }: { href?: string; label: string }) {
   const isExternal = trimmed?.startsWith("http") ?? false;
 
   if (!trimmed) {
-    return <span className="font-normal text-foreground/40">[{label}]</span>;
+    return <span className="text-ink-soft/50">[{label}]</span>;
   }
 
   return (
     <a
       href={trimmed}
-      className="font-normal text-accent hover:underline"
+      className="type-link text-ink-soft hover:text-nav-gold"
       {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
     >
       [{label}]
@@ -292,47 +318,96 @@ function DownloadLink({ href, label }: { href?: string; label: string }) {
   );
 }
 
-function ProjectTitle({ project }: { project: IProject }) {
-  if (project.category === "mobile") {
-    return (
-      <div className="text-sm font-semibold">
-        <h3>{project.name}</h3>
-        <div>
-          <DownloadLink href={project.href} label="Download for Android" />
-        </div>
-        <div>
-          <DownloadLink href={project.iosHref} label="Download for iOS" />
-        </div>
-      </div>
-    );
-  }
-
-  const href = project.href?.trim();
-  const isExternal = href?.startsWith("http") ?? false;
+function ProjectCard({
+  project,
+  onScreenshotClick,
+}: {
+  project: IProject;
+  onScreenshotClick: (image: ModalImage) => void;
+}) {
+  const hasScreenshots = project.screenshotNames && project.screenshotNames.length > 0;
+  const primaryScreenshot = project.screenshotNames?.[0];
 
   return (
-    <div className="text-sm font-semibold">
-      <h3>{project.name}</h3>
-      {href ? (
-        <div>
-          <a
-            href={href}
-            className="font-normal text-accent hover:underline"
-            {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          >
-            [{project.category === "macos" ? "Download for macOS" : "Download"}]
-          </a>
+    <article className="bevel-inset rounded-sm p-3">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1">
+          <h3 className="type-link text-ink">{project.name}</h3>
+          {project.category === "mobile" && (
+            <div className="mt-1 flex flex-wrap gap-2">
+              <DownloadLink href={project.href} label="Android" />
+              <DownloadLink href={project.iosHref} label="iOS" />
+            </div>
+          )}
+          {project.category !== "mobile" && project.href?.trim() && (
+            <div className="mt-1">
+              <DownloadLink
+                href={project.href}
+                label={project.category === "macos" ? "macOS" : "Download"}
+              />
+            </div>
+          )}
         </div>
-      ) : null}
-    </div>
+        <a href={`#${project.id}`} className="btn-arrow-chip" aria-label={`View ${project.name}`}>
+          ›
+        </a>
+      </div>
+      <p className="mt-2 text-[12px] leading-relaxed text-ink">{project.description}</p>
+      <div className="mt-2 flex flex-wrap gap-1">
+        {project.techStack.map((tech) => (
+          <span key={tech} className="tech-chip">
+            {tech}
+          </span>
+        ))}
+      </div>
+      {hasScreenshots && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {project.screenshotNames!.map((screenshotName, index) => (
+            <button
+              type="button"
+              key={screenshotName ?? index}
+              className="featured-tile relative h-[60px] w-[95px] shrink-0 cursor-zoom-in overflow-hidden"
+              onClick={() =>
+                onScreenshotClick({
+                  src: imageSrc(screenshotName),
+                  alt: `${project.name} screenshot ${index + 1}`,
+                })
+              }
+              aria-label={`Open ${project.name} screenshot ${index + 1}`}
+            >
+              <Image
+                src={imageSrc(screenshotName)}
+                alt={`${project.name} screenshot ${index + 1}`}
+                fill
+                sizes="95px"
+                className="rounded-sm object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+      {!hasScreenshots && primaryScreenshot === undefined && project.category === "web" && (
+        <div className="featured-tile relative mt-3 h-[60px] w-[95px] overflow-hidden">
+          <Image
+            src={imageSrc("javascript-game.png")}
+            alt={`${project.name} screenshot`}
+            fill
+            sizes="95px"
+            className="rounded-sm object-cover"
+          />
+        </div>
+      )}
+    </article>
   );
 }
 
 export default function Home() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [modalImage, setModalImage] = useState<ModalImage | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const lastActiveElementRef = useRef<HTMLElement | null>(null);
   const { theme, handleThemeChange } = useTheme();
+
   const webProjects = projects.filter((project) => project.category === "web");
   const macosProjects = projects.filter((project) => project.category === "macos");
   const mobileProjects = projects.filter((project) => project.category === "mobile");
@@ -348,61 +423,75 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen overflow-x-auto bg-canvas">
       {modalImage && <ScreenshotModal image={modalImage} onClose={closeModal} />}
-      <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <div className="text-sm font-mono uppercase tracking-[0.2em] text-accent">
-            Michael Lim
+
+      <div className="mx-auto min-w-[320px] max-w-[830px] px-2 pb-8 pt-2 sm:px-0">
+        {/* Masthead */}
+        <div className="mb-2 flex flex-wrap items-end justify-between gap-3 px-1">
+          <div className="flex items-end gap-2">
+            <span className="text-4xl leading-none" role="img" aria-label="Developer mascot">
+              👨‍💻
+            </span>
+            <div className="mascot-bubble">Welcome to MichaelLim.com!</div>
           </div>
-          <div className="flex items-center gap-3">
-            <nav className="hidden gap-4 text-xs sm:flex sm:text-sm">
-              {navItems.map((item) => (
-                <a
-                  key={item.id}
-                  href={item.href}
-                  className="text-foreground/70 transition hover:text-accent"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
-            {enableThemeSwitcher && (
-              <label className="flex items-center gap-1 rounded-md border border-white/10 bg-black/20 px-2 py-1 text-[10px] text-foreground/70">
-                <span className="font-mono uppercase tracking-[0.16em]">Theme</span>
-                <select
-                  value={theme}
-                  onChange={(event) => handleThemeChange(event.target.value as ThemeName)}
-                  className="bg-transparent text-[10px] text-foreground/80 focus:outline-none"
-                >
-                  <option value="dark-teal">Dark teal</option>
-                  <option value="dark-green">Dark green</option>
-                  <option value="light-neutral">Light</option>
-                </select>
-              </label>
-            )}
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md border border-white/10 bg-black/20 px-2 py-1 text-xs text-foreground/80 shadow-sm shadow-black/30 sm:hidden"
-              onClick={() => setIsMobileNavOpen((open) => !open)}
-              aria-label="Toggle navigation menu"
-            >
-              <span className="mr-1 text-[10px] font-mono uppercase tracking-[0.2em]">Menu</span>
-              <span className="flex flex-col gap-0.5">
-                <span className="h-0.5 w-3 bg-current" />
-                <span className="h-0.5 w-3 bg-current" />
-              </span>
+          <div className="flex items-center gap-2">
+            <input
+              type="search"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="nintendo-input w-32 sm:w-40"
+              aria-label="Search portfolio"
+            />
+            <button type="button" className="btn-amber">
+              Go
             </button>
           </div>
         </div>
+
+        {/* Primary Nav */}
+        <nav className="carbon-slab flex flex-wrap items-center gap-2 px-2 py-1">
+          <a href="#home" className="logo-pill mr-1">
+            ML
+          </a>
+          <div className="hidden flex-1 items-center gap-3 sm:flex">
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={item.href}
+                className="type-nav-link text-nav-gold hover:text-amber"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+          <div className="ml-auto flex items-center gap-2">
+            <a href="#projects" className="btn-amber hidden sm:inline-flex">
+              Projects
+            </a>
+            <a href="#contact" className="btn-amber hidden sm:inline-flex">
+              Contact
+            </a>
+            <button
+              type="button"
+              className="btn-amber sm:hidden"
+              onClick={() => setIsMobileNavOpen((open) => !open)}
+              aria-label="Toggle navigation menu"
+            >
+              Menu
+            </button>
+          </div>
+        </nav>
+
         {isMobileNavOpen && (
-          <nav className="border-t border-white/10 bg-background/95 px-6 py-3 sm:hidden">
-            <div className="mx-auto flex max-w-5xl flex-col gap-2 text-xs">
+          <nav className="carbon-slab border-t border-black/30 px-3 py-2 sm:hidden">
+            <div className="flex flex-col gap-2">
               {navItems.map((item) => (
                 <a
                   key={item.id}
                   href={item.href}
-                  className="py-1 text-foreground/80 transition hover:text-accent"
+                  className="type-nav-link text-nav-gold"
                   onClick={() => setIsMobileNavOpen(false)}
                 >
                   {item.label}
@@ -411,388 +500,272 @@ export default function Home() {
             </div>
           </nav>
         )}
-      </header>
 
-      <main className="mx-auto flex max-w-5xl flex-col px-6 pb-24 pt-10">
-        <section id="home" className="scroll-mt-24 pb-16 pt-8 sm:pt-12">
-          <div>
-            <p className="text-xs font-mono uppercase tracking-[0.25em] text-accent">
-              Senior Software Engineer (Front-End Focus with Back-End Experience)
-            </p>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              I build clear, performant web and mobile experiences.
-            </h1>
-            <p className="mt-4 text-sm leading-relaxed text-foreground/70 sm:text-base">
-              Senior Software Engineer with over 13 years of experience architecting scalable, accessible web and mobile applications using React, TypeScript, and React Native. I specialize in building high-performance front-end architectures and robust design systems, including the development of a WCAG 2.1 AA-compliant system that increased delivery efficiency by 20% for over 1M users. A collaborative leader experienced in working across UX, product, and backend teams to integrate CI/CD pipelines and deliver high-quality, reliable features in distributed, cross-functional environments.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3 sm:justify-start">
-              <a
-                href="#experience"
-                className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-background shadow-sm shadow-accent/40 transition hover:bg-accent-soft"
+        {/* Secondary Nav */}
+        <div className="subnav-strip">
+          {subNavItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="subnav-link"
+              {...(item.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+            >
+              {item.label}
+            </a>
+          ))}
+          {enableThemeSwitcher && (
+            <label className="subnav-link flex items-center gap-1 border-r-0">
+              Theme
+              <select
+                value={theme}
+                onChange={(event) => handleThemeChange(event.target.value as ThemeName)}
+                className="bg-transparent text-[10px] text-ink focus:outline-none"
               >
-                View experience
-              </a>
-              <a
-                href="#projects"
-                className="rounded-full border border-accent/40 px-5 py-2 text-sm font-medium text-accent transition hover:border-accent hover:bg-accent/5"
-              >
-                View projects
+                <option value="nintendo">Nintendo</option>
+                <option value="dark-teal">Dark teal</option>
+                <option value="dark-green">Dark green</option>
+                <option value="light-neutral">Light</option>
+              </select>
+            </label>
+          )}
+        </div>
+
+        {/* Hero */}
+        <section id="home" className="scroll-mt-4">
+          <div className="hero-panel hero-panel-lavender chamfer-panel mt-3">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h1 className="display-wordmark">MICHAEL LIM</h1>
+                <p className="mt-2 text-[15px] font-bold leading-snug text-white drop-shadow-[1px_1px_0_#21242e]">
+                  Senior Software Engineer — clear, performant web &amp; mobile experiences.
+                </p>
+                <p className="mt-2 max-w-lg text-[12px] leading-relaxed text-white/90">
+                  13+ years architecting scalable, accessible applications with React, TypeScript,
+                  and React Native. WCAG 2.1 AA design systems, micro-frontends, and
+                  cross-functional delivery for 1M+ users.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <a href="#experience" className="btn-signal">
+                    View Experience
+                  </a>
+                  <a href="#projects" className="btn-amber">
+                    View Projects
+                  </a>
+                </div>
+              </div>
+              <a href="#about" className="btn-arrow mt-2 hidden shrink-0 sm:flex" aria-label="Learn more">
+                <ArrowIcon />
               </a>
             </div>
           </div>
         </section>
 
-        <section id="about" className={sectionClassName}>
-          <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">About</h2>
-          <div className="mt-4 space-y-4 text-sm leading-relaxed text-foreground/80 sm:text-base">
-            <p>
-              I hold a master&apos;s degree in Engineering Technology and a bachelor&apos;s degree
-              in Computer Science. With over 13 years of experience in web development, I have built
-              a strong foundation in designing and developing dynamic, scalable web and mobile
-              applications using React, React Native, TypeScript, and modern JavaScript tools. My
-              passion for crafting intuitive user experiences, along with my ability to collaborate
-              effectively across cross-functional teams, makes me a strong fit for this role.
-            </p>
-            <p>
-              Most recently, I served as a Technical Consultant at Northwell Health, where I provided specialized front-end development expertise and partnered closely with internal teams to drive digital transformation initiatives. I played a key role in implementing GCP Vertex AI features on the Google Cloud Platform, enhancing user search experiences, and contributed to the MyNorthwell application, ensuring seamless accessibility across web
-              and mobile platforms. My experience with database management, including MSSQL, PostgreSQL, and Sequelize migrations, has further enabled me to optimize data handling
-              and performance.
-            </p>
-          </div>
-        </section>
-
-        <section id="experience" className={sectionClassName}>
-          <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Experience</h2>
-          <div className="mt-6 space-y-4">
-            {experiences.map((experience) => (
-              <article
-                key={experience.id}
-                className="rounded-xl border border-white/10 bg-white/5 p-4 shadow-sm shadow-black/30 backdrop-blur-sm"
-              >
-                <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-baseline">
-                  <div>
-                    <h3 className="text-sm font-semibold sm:text-base">{experience.role}</h3>
-                    <p className="text-xs text-foreground/60 sm:text-sm">{experience.company}</p>
-                  </div>
-                  <p className="text-xs text-foreground/50 sm:text-xs">{experience.period}</p>
-                </div>
-                <p className="mt-3 text-xs leading-relaxed text-foreground/80 sm:text-sm">
-                  {experience.description}
-                </p>
-                {experience.techStack && experience.techStack.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {experience.techStack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-full border border-white/10 bg-black/20 px-2.5 py-0.5 text-[11px] text-foreground/80"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </article>
+        {/* Body: left rail + content + right rail */}
+        <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:gap-0">
+          {/* Left rail tabs */}
+          <div className="hidden shrink-0 flex-col lg:flex">
+            {leftRailTabs.map((tab) => (
+              <a key={tab.label} href={tab.href} className="left-rail-tab">
+                {tab.label}
+              </a>
             ))}
           </div>
-        </section>
 
-        <section id="projects" className={sectionClassName}>
-          <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Projects</h2>
-
-          <div className="mt-6 grid gap-8 md:grid-cols-2">
-            <div className="space-y-4">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
-                Web
-              </h3>
-              <div className="grid gap-4">
-                {webProjects.map((project) => {
-                  const primaryScreenshot = project.screenshotNames?.[0];
-
-                  return (
-                    <article
-                      key={project.id}
-                      className="flex flex-col justify-between rounded-xl border border-white/10 bg-white/5 p-4 text-sm shadow-sm shadow-black/30 backdrop-blur-sm"
-                    >
-                      <div>
-                        <ProjectTitle project={project} />
-                        <p className="mt-2 text-xs leading-relaxed text-foreground/80">
-                          {project.description}
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {project.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="rounded-full border border-white/10 bg-black/20 px-2.5 py-0.5 text-[11px] text-foreground/80"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="mt-3 flex items-center gap-3">
-                          <div className="relative h-52 w-full max-w-xs rounded-xl border border-accent-soft/30 bg-accent-soft/10 shadow-inner shadow-black/40">
-                            <div className="absolute inset-x-4 top-2 flex items-center gap-1">
-                              <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-                              <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-                              <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
-                            </div>
-                            <div className="absolute inset-x-3 bottom-2 top-5 overflow-hidden rounded-lg border border-white/15 bg-black/60">
-                              {primaryScreenshot ? (
-                                <button
-                                  type="button"
-                                  className="relative block h-full w-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-                                  // onClick={() =>
-                                  //   openModal({
-                                  //     src: imageSrc(primaryScreenshot),
-                                  //     alt: `${project.name} screenshot`,
-                                  //   })
-                                  // }
-                                  aria-label={`Open ${project.name} screenshot`}
-                                >
-                                  <Image
-                                    src={imageSrc(primaryScreenshot)}
-                                    alt={`${project.name} screenshot`}
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 320px"
-                                    className="object-cover"
-                                  />
-                                </button>
-                              ) : (
-                                <div className="flex h-full w-full items-center justify-center px-3 text-center">
-                                  <span className="text-[10px] text-foreground/70">
-                                    web-screenshot.png
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
+          {/* Main content column */}
+          <div className="min-w-0 flex-[2] px-1 lg:px-2">
+            {/* About */}
+            <section id="about" className="scroll-mt-4">
+              <div className="bevel-plate overflow-hidden">
+                <SectionLabelBar title="About" />
+                <div className="space-y-3 bg-surface p-4 text-[12px] leading-relaxed text-ink">
+                  <p>
+                    I hold a master&apos;s degree in Engineering Technology and a bachelor&apos;s
+                    degree in Computer Science. With over 13 years of experience in web development, I
+                    have built a strong foundation in designing and developing dynamic, scalable web
+                    and mobile applications using React, React Native, TypeScript, and modern
+                    JavaScript tools.
+                  </p>
+                  <hr className="dotted-divider" />
+                  <p>
+                    Most recently, I served as a Technical Consultant at Northwell Health, where I
+                    provided specialized front-end development expertise and partnered closely with
+                    internal teams to drive digital transformation initiatives. I played a key role
+                    in implementing GCP Vertex AI features on the Google Cloud Platform, enhancing
+                    user search experiences, and contributed to the MyNorthwell application.
+                  </p>
+                </div>
               </div>
-            </div>
+            </section>
 
-            <div className="space-y-4">
-              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
-                macOS
-              </h3>
-              <div className="grid gap-4">
-                {macosProjects.map((project) => {
-                  const hasScreenshots =
-                    project.screenshotNames && project.screenshotNames.length > 0;
-
-                  return (
-                    <article
-                      key={project.id}
-                      className="flex flex-col justify-between rounded-xl border border-white/10 bg-white/5 p-4 text-sm shadow-sm shadow-black/30 backdrop-blur-sm"
-                    >
-                      <div>
-                        <ProjectTitle project={project} />
-                        <p className="mt-2 text-xs leading-relaxed text-foreground/80">
-                          {project.description}
+            {/* Experience */}
+            <section id="experience" className="scroll-mt-4 mt-4">
+              <div className="bevel-plate overflow-hidden">
+                <SectionLabelBar title="Official Experience" />
+                <div className="bg-platinum p-2">
+                  {experiences.map((experience) => (
+                    <article key={experience.id} className="news-row">
+                      <div className="flex-1 min-w-0">
+                        <a href={`#${experience.id}`} className="type-link text-ink-soft hover:text-nav-gold">
+                          {experience.role}
+                        </a>
+                        <p className="text-[11px] text-ink">{experience.company}</p>
+                        <p className="mt-1 text-[11px] leading-relaxed text-ink/80">
+                          {experience.description}
                         </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {project.techStack.map((tech) => (
-                            <span
-                              key={tech}
-                              className="rounded-full border border-white/10 bg-black/20 px-2.5 py-0.5 text-[11px] text-foreground/80"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="mt-3">
-	                          <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
-	                            {hasScreenshots ? (
-	                              project.screenshotNames!.map((screenshotName, index) => (
-	                                <button
-	                                  type="button"
-	                                  key={screenshotName ?? index}
-	                                  className="relative h-40 w-24 shrink-0 cursor-zoom-in rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50 transition hover:border-accent-soft/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-	                                  onClick={() =>
-	                                    openModal({
-	                                      src: imageSrc(screenshotName),
-	                                      alt: `${project.name} screenshot ${index + 1}`,
-	                                    })
-	                                  }
-	                                  aria-label={`Open ${project.name} screenshot ${index + 1}`}
-	                                >
-	                                  <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-	                                    <Image
-	                                      src={imageSrc(screenshotName)}
-	                                      alt={`${project.name} screenshot ${index + 1}`}
-	                                      fill
-	                                      sizes="96px"
-	                                      className="object-cover"
-	                                    />
-	                                  </div>
-	                                  <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-	                                  <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-	                                </button>
-	                              ))
-	                            ) : (
-	                              <div className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50">
-	                                <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-	                                  <div className="flex h-full w-full items-center justify-center px-2 text-center">
-                                    <span className="text-[10px] text-foreground/70">
-                                      macos-screenshot.png
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-                                <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-10 space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-foreground/60">
-              Mobile
-            </h3>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {mobileProjects.map((project) => {
-                const hasScreenshots =
-                  project.screenshotNames && project.screenshotNames.length > 0;
-
-                return (
-                  <article
-                    key={project.id}
-                    className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/5 p-4 text-sm shadow-sm shadow-black/30 backdrop-blur-sm"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <ProjectTitle project={project} />
-                        <p className="mt-1 text-xs leading-relaxed text-foreground/80">
-                          {project.description}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-1 flex flex-wrap gap-2">
-                      {project.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="rounded-full border border-white/10 bg-black/20 px-2.5 py-0.5 text-[11px] text-foreground/80"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center">
-	                      <div className="grid grid-cols-2 gap-3 sm:flex sm:overflow-x-auto sm:pb-2">
-	                        {hasScreenshots ? (
-	                          project.screenshotNames!.map((screenshotName, index) => (
-	                            <button
-	                              type="button"
-	                              key={screenshotName ?? index}
-	                              className="relative h-40 w-24 shrink-0 cursor-zoom-in rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50 transition hover:border-accent-soft/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
-	                              onClick={() =>
-	                                openModal({
-	                                  src: imageSrc(screenshotName),
-	                                  alt: `${project.name} screenshot ${index + 1}`,
-	                                })
-	                              }
-	                              aria-label={`Open ${project.name} screenshot ${index + 1}`}
-	                            >
-	                              <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-	                                <Image
-	                                  src={imageSrc(screenshotName)}
-	                                  alt={`${project.name} screenshot ${index + 1}`}
-	                                  fill
-	                                  sizes="96px"
-	                                  className="object-cover"
-	                                />
-	                              </div>
-	                              <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-	                              <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
-	                            </button>
-	                          ))
-	                        ) : (
-	                          <div className="relative h-40 w-24 shrink-0 rounded-3xl border border-accent-soft/40 bg-accent-soft/20 shadow-inner shadow-black/50">
-	                            <div className="absolute inset-1 overflow-hidden rounded-2xl border border-white/20 bg-black/60">
-	                              <div className="flex h-full w-full items-center justify-center px-2 text-center">
-                                <span className="text-[10px] text-foreground/70">
-                                  screenshot.png
-                                </span>
-                              </div>
-                            </div>
-                            <div className="absolute inset-x-6 top-2 h-1.5 rounded-full bg-white/20" />
-                            <div className="absolute inset-x-4 bottom-2 h-1 rounded-full bg-white/20" />
+                        {experience.techStack && experience.techStack.length > 0 && (
+                          <div className="mt-2 flex flex-wrap gap-1">
+                            {experience.techStack.map((tech) => (
+                              <span key={tech} className="tech-chip">
+                                {tech}
+                              </span>
+                            ))}
                           </div>
                         )}
                       </div>
-                      <p className="flex-1 text-xs text-foreground/60">
-                        {project.note ?? "Add a screenshot of the app UI here."}
-                      </p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className={sectionClassName}>
-          <div className="flex flex-col gap-8 md:flex-row md:items-center">
-            <div className="md:w-2/3">
-              <h2 className="text-sm font-mono uppercase tracking-[0.25em] text-accent">Contact</h2>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/80 sm:text-base">
-                I am always open to discussing frontend architecture, React and React Native
-                projects, or mentoring opportunities. I am available on social medias provided
-                below. You can message me, I will reply as soon as possible.
-              </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm sm:justify-start">
-                <a
-                  href="mailto:michaelds.lim@gmail.com"
-                  className="rounded-full bg-accent px-5 py-2 text-sm font-medium text-background shadow-sm shadow-accent/40 transition hover:bg-accent-soft"
-                >
-                  Email
-                </a>
-                <a
-                  href="https://github.com/michaeldslim/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-accent/40 px-5 py-2 text-sm font-medium text-accent transition hover:border-accent hover:bg-accent/5"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/codeinlife/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-full border border-accent/40 px-5 py-2 text-sm font-medium text-accent transition hover:border-accent hover:bg-accent/5"
-                >
-                  LinkedIn
-                </a>
+                      <ArrowChip />
+                    </article>
+                  ))}
+                </div>
               </div>
-            </div>
+            </section>
 
-            <div className="md:w-1/3">
-              <div className="mt-8 flex justify-center md:mt-0">
-                <div className="rounded-3xl border border-accent-soft/40 bg-background/60 p-1.5 shadow-lg shadow-black/40">
-                  <div className="relative h-44 w-44 overflow-hidden rounded-2xl border border-accent-soft/60 bg-white/5">
-                    <Image
-                      src={imageSrc("michael.jpg")}
-                      alt="Portrait of Michael Lim"
-                      fill
-                      className="object-cover"
-                      priority
-                    />
+            {/* Projects */}
+            <section id="projects" className="scroll-mt-4 mt-4">
+              <div className="bevel-plate overflow-hidden">
+                <SectionLabelBar title="Featured Projects" />
+                <div className="space-y-4 bg-platinum p-3">
+                  {/* Web */}
+                  <div>
+                    <h3 className="type-ui-label mb-2 text-ink-soft">Web</h3>
+                    <div className="grid gap-2">
+                      {webProjects.map((project) => (
+                        <ProjectCard
+                          key={project.id}
+                          project={project}
+                          onScreenshotClick={openModal}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <hr className="dotted-divider" />
+
+                  {/* macOS */}
+                  <div>
+                    <h3 className="type-ui-label mb-2 text-ink-soft">macOS</h3>
+                    <div className="grid gap-2">
+                      {macosProjects.map((project) => (
+                        <ProjectCard
+                          key={project.id}
+                          project={project}
+                          onScreenshotClick={openModal}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <hr className="dotted-divider" />
+
+                  {/* Mobile */}
+                  <div>
+                    <h3 className="type-ui-label mb-2 text-ink-soft">Mobile</h3>
+                    <div className="grid gap-2 sm:grid-cols-1">
+                      {mobileProjects.map((project) => (
+                        <ProjectCard
+                          key={project.id}
+                          project={project}
+                          onScreenshotClick={openModal}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
           </div>
-        </section>
-      </main>
+
+          {/* Right action rail */}
+          <aside className="w-full shrink-0 px-1 lg:w-[220px] lg:pl-2">
+            <div id="contact" className="scroll-mt-4 space-y-3">
+              <a href="mailto:michaelds.lim@gmail.com" className="btn-carbon">
+                <span aria-hidden="true">✉</span> Email Me
+              </a>
+              <a
+                href="https://github.com/michaeldslim/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-carbon"
+              >
+                <span aria-hidden="true">⌘</span> GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/codeinlife/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-carbon"
+              >
+                <span aria-hidden="true">in</span> LinkedIn
+              </a>
+              <a href="#experience" className="btn-carbon">
+                <span aria-hidden="true">★</span> Experience
+              </a>
+
+              {/* Info box */}
+              <div className="info-box mt-4">
+                <div className="info-box-tab">What Is — Portfolio</div>
+                <div className="p-3 text-[12px] leading-relaxed text-ink">
+                  A showcase of web, mobile, and macOS projects built with React, React Native,
+                  TypeScript, and Swift. Browse featured apps, games, and tools below.
+                </div>
+              </div>
+
+              {/* Promo card with photo */}
+              <div className="promo-card">
+                <p className="display-wordmark text-[22px]">DEVELOPER</p>
+                <div className="relative mx-auto mt-2 h-36 w-36 overflow-hidden rounded-sm border-2 border-chrome-indigo bg-surface">
+                  <Image
+                    src={imageSrc("michael.jpg")}
+                    alt="Portrait of Michael Lim"
+                    fill
+                    className="object-cover"
+                    sizes="144px"
+                  />
+                </div>
+                <p className="type-micro mt-2 text-carbon">Michael Lim — Senior SWE</p>
+              </div>
+
+              {/* Player's Poll style panel */}
+              <div className="bevel-raised mt-3 rounded-md p-3">
+                <p className="type-ui-label text-ink">Quick Stats</p>
+                <ul className="mt-2 space-y-1 text-[12px] text-ink">
+                  <li>• 13+ years experience</li>
+                  <li>• React / React Native / TS</li>
+                  <li>• {projects.length} featured projects</li>
+                  <li>• WCAG 2.1 AA design systems</li>
+                </ul>
+                <a href="#contact" className="btn-signal mt-3 w-full text-center">
+                  Get In Touch
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        {/* Footer */}
+        <footer className="carbon-slab chamfer-panel mt-6 px-4 py-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="type-micro text-sky">
+              © {new Date().getFullYear()} Michael Lim. All rights reserved.
+            </p>
+            <span className="esrb-badge">Portfolio — Built with Next.js</span>
+            <a href="mailto:michaelds.lim@gmail.com" className="type-micro text-sky hover:text-amber">
+              Privacy / Contact
+            </a>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }

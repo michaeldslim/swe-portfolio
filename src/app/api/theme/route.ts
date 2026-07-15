@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 		const body = await request.json();
 		const theme = body?.theme as ThemeName | undefined;
 
-		if (!theme || !["dark-teal", "dark-green", "light-neutral"].includes(theme)) {
+		if (!theme || !["nintendo", "dark-teal", "dark-green", "light-neutral"].includes(theme)) {
 			return NextResponse.json({ error: "Invalid theme" }, { status: 400 });
 		}
 
