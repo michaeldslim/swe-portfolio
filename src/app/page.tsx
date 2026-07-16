@@ -260,6 +260,18 @@ const projects: IProject[] = [
     note: "",
     screenshotNames: ["maze-1.png", "maze-2.png", "maze-3.png", "maze-4.png"],
   },
+  {
+    id: "proj-mobile-11",
+    name: "Pong Game",
+    description:
+      "A classic Pong game implemented with React Native. Challenge yourself in a single-player experience against an AI opponent.",
+    techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    href: "https://github.com/michaeldslim/pong-rn/releases/latest",
+    iosHref: "",
+    category: "mobile",
+    note: "",
+    screenshotNames: ["pong-1.png", "pong-2.png", "pong-3.png", "pong-4.png"],
+  },
 ];
 
 const imageSrc = (filename: string) => `/images/${filename}`;
