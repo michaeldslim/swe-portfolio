@@ -466,8 +466,7 @@ export default function Home() {
               I build clear, performant web and mobile experiences.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-off-black-ink/80">
-              Senior Software Engineer with over 13 years of experience architecting scalable,
-              accessible web and mobile applications using React, TypeScript, and React Native.
+            Senior Software Engineer with 13+ years building scalable, accessible web and mobile applications - specializing in React, React Native, and TypeScript.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <a
