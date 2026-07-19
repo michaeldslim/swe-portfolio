@@ -297,7 +297,7 @@ function DownloadLink({ href, label }: { href?: string; label: string }) {
   const isExternal = trimmed?.startsWith("http") ?? false;
 
   if (!trimmed) {
-    return <span className="text-graphite">[{label}]</span>;
+    return <span className="text-smoke">[{label}]</span>;
   }
 
   return (
