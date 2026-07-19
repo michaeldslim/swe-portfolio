@@ -219,10 +219,11 @@ const projects: IProject[] = [
     description:
       "A number baseball game built with React Native and TypeScript using Expo, where players guess a secret number with unique digits (including 0) and get Strike, Ball, or Out feedback on each attempt.",
     techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    href: "https://github.com/michaeldslim/bulls-cows/releases/latest",
     iosHref: "",
     category: "mobile",
     note: "",
-    screenshotNames: ["bulls-cows-1.png", "bulls-cows-2.png", "bulls-cows-3.png", "bulls-cows-4.png"],
+    screenshotNames: ["bulls-cows-01.png", "bulls-cows-02.png", "bulls-cows-03.png", "bulls-cows-04.png"],
   },
   {
     id: "proj-mobile-8",
