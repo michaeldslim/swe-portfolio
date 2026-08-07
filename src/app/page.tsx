@@ -275,6 +275,18 @@ const projects: IProject[] = [
   },
   {
     id: "proj-mobile-12",
+    name: "Currency Converter",
+    description:
+      "Android-only React Native app that displays USD and JPY exchange rates against Korean Won (KRW) in large cards. UI language follows the Android system language — English, Korean, or Japanese (`en` / `ko` / `ja`); unsupported locales fall back to English.",
+    techStack: ["React Native", "TypeScript", "Expo", "Android"],
+    href: "https://github.com/michaeldslim/currency-converter/releases/latest",
+    iosHref: "",
+    category: "mobile",
+    note: "",
+    screenshotNames: ["currency-1.png", "currency-2.png", "currency-3.png", "currency-4.png"],
+  },
+  {
+    id: "proj-mobile-13",
     name: "Lego Striker",
     description:
       "A 2D side-view flick soccer game built with Expo and React Native. Flick Lego minifigures to kick the ball, dodge moving goalkeeper bars, and score on the opponent's goal in a turn-based casual match against AI.",
