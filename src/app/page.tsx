@@ -273,6 +273,18 @@ const projects: IProject[] = [
     note: "",
     screenshotNames: ["pong-1.png", "pong-2.png", "pong-3.png", "pong-4.png"],
   },
+  {
+    id: "proj-mobile-12",
+    name: "Lego Striker",
+    description:
+      "A 2D side-view flick soccer game built with Expo and React Native. Flick Lego minifigures to kick the ball, dodge moving goalkeeper bars, and score on the opponent's goal in a turn-based casual match against AI.",
+    techStack: ["React Native", "TypeScript", "Expo", "Android", "iOS"],
+    href: "https://github.com/michaeldslim/lego-striker/releases/latest",
+    iosHref: "",
+    category: "mobile",
+    note: "",
+    screenshotNames: ["lego-1.png", "lego-2.png", "lego-3.png", "lego-4.png"],
+  },
 ];
 
 const imageSrc = (filename: string) => `/images/${filename}`;
